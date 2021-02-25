@@ -3,7 +3,7 @@ from mysql.connector import connect, Error
 
 try:
     with connect(
-        host="18013_earp",
+        host="ekonomik.atthost24.pl",
         user="18013_earp",
         password=getpass("earp.123"),
     ) as connection:
