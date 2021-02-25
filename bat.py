@@ -10,3 +10,4 @@ try:
         print(connection)
 except Error as e:
     print(e)
+
