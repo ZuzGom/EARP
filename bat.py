@@ -5,7 +5,7 @@ try:
     with connect(
         host="ekonomik.atthost24.pl",
         user="18013_earp",
-        password=getpass("earp.123"),
+        password="earp.123",
     ) as connection:
         print(connection)
 except Error as e:
