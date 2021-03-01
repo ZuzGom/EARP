@@ -1,3 +1,6 @@
+import os
+os.environ['KIVY_GL_BACKEND'] = 'sdl2'
+from kivy.core.window import Window
 import kivy
 from kivy.app import App
 from kivy.lang import Builder
