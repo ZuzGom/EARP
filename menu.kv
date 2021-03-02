@@ -1,10 +1,25 @@
+
+<Tlo>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'kot.png'
 FloatLayout:
     id: layout
+    
     Label:
         pos: 10, self.parent.height - self.height - 10
         text: "Left click anywhere outside the context menu to close it"
         size_hint: None, None
         size: self.texture_size
+    Widget:
+        pos: 100, 100
+        text: "Bro"
+        size_hint: None, None
+        source: 'kot.png'
+        #size: self.texture_size
+
 
     Button:
         size_hint: None, None
@@ -43,3 +58,5 @@ FloatLayout:
                     text: "SubMenu #7"
         ContextMenuTextItem:
             text: "SubMenu #4"
+    Tlo:
+        size_hint: None, None

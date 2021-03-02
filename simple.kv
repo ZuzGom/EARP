@@ -1,0 +1,51 @@
+<Warstwa>:
+    id: layout
+    canvas.before:
+        Color:
+            rgba: (240/255,201/255,1/255,1)
+        Triangle:
+            points: [root.width + 200, root.height, 0, root.height - 100, 0, root.height]
+    Image:
+        source: "image/rys.png"
+        #pos: root.width - 100, root.height - 100
+        size: root.width, root.height - 10
+    
+    BoxLayout:
+
+        id: layout
+        
+        orientation: "vertical"
+        pos: 0, int(root.height/3)
+        size: 200, 300
+
+        padding: 60
+        spacing: 10
+        
+        #Button:
+            #text: "Pszola"
+        #Button:
+            #text: "Indeed"
+    FloatLayout:
+        Button:
+            size_hint: None, None
+            pos: (root.width -self.width)/2, root.height - 50
+            #pos_hint: {"center_x": 0.5, "center_y": 0.8 }
+            size: 300, 40
+            text: "Menu"
+            on_release: context_menu.show(*app.root_window.mouse_pos)
+
+        ContextMenu:
+            id: context_menu
+            visible: False
+            cancel_handler_widget: layout
+
+            ContextMenuTextItem:
+                text: "Ule"
+            ContextMenuTextItem:
+                text: "Alerty"
+                ContextMenu:
+                    ContextMenuTextItem:
+                        text: "Dziś"
+                    ContextMenuTextItem:
+                        text: "Arhiwum"
+    
