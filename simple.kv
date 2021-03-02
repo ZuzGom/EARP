@@ -1,3 +1,4 @@
+#:import idle nf
 <Warstwa>:
     id: layout
     canvas.before:
@@ -16,10 +17,14 @@
         
         orientation: "vertical"
         pos: 0, int(root.height/3)
-        size: 200, 300
+        size: 200, 200
 
         padding: 60
         spacing: 10
+
+        Button:
+            text: "Powitanie"
+            on_press: idle
         
         #Button:
             #text: "Pszola"
@@ -38,9 +43,9 @@
             id: context_menu
             visible: False
             cancel_handler_widget: layout
-
             ContextMenuTextItem:
                 text: "Ule"
+                on_press: idle
             ContextMenuTextItem:
                 text: "Alerty"
                 ContextMenu:

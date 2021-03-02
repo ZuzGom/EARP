@@ -10,6 +10,9 @@ from kivy.lang import Builder
 #from kivy.properties import ObjectProperty, ListProperty
 import kivy_garden.contextmenu
 
+import nf
+
+
 Builder.load_file('simple.kv')
 #Window.clearcolor = (249, 201, 1, 1)
 '''

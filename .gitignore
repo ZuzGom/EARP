@@ -5,3 +5,5 @@
 /build
 /dist
 /image
+buildozer.spec
+/__pycache__
