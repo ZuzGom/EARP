@@ -7,3 +7,6 @@
 /image
 buildozer.spec
 /__pycache__
+old_main.py
+bare.kv
+old_test.kv

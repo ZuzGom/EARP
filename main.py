@@ -1,34 +1,21 @@
-import os
-os.environ['KIVY_GL_BACKEND'] = 'sdl2'
-from kivy.core.window import Window
 import kivy
-from kivy.uix.image import Image
-from kivy.uix.widget import Widget
-from kivy.uix.label import Label
+kivy.require('1.0.7')
+from kivy.core.window import Window
 from kivy.app import App
-from kivy.lang import Builder
-#from kivy.properties import ObjectProperty, ListProperty
+from kivy.uix.widget import Widget
 import kivy_garden.contextmenu
-
-import nf
-
-
-Builder.load_file('simple.kv')
-#Window.clearcolor = (249, 201, 1, 1)
-'''
-class Tlo(Label):
-    background = ListProperty((0.2, 0.2, 0.2))
-'''
+from plyer import notification
 
 class Warstwa(Widget):
+    def idle(self):
+        notification.notify(title='Twój ul jest bezpiczny!', message='poprzez Elektorniczny Asystent Rodziny Pszczelej')
     pass
-
-class MyApp(App):
+class TestApp(App):
+    Window.clearcolor = (250/255,233/255,203/255,1)
     def build(self):
-        self.title = 'EARP'
-        
-        Window.clearcolor = (250/255,233/255,203/255,1)
         return Warstwa()
 
+# buildozer android debug deploy run
+
 if __name__ == '__main__':
-    MyApp().run()
+    TestApp().run()
