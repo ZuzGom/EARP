@@ -5,12 +5,17 @@
             rgba: (240/255,201/255,1/255,1)
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
+    Image:
+        source: "image/pszola.png"
+        pos: root.width - self.width, root.height - self.height
+        size: root.width, root.height - 10
+
     BoxLayout:
 
         id: layout
         
         orientation: "vertical"
-        pos: 0, int(root.height/3)
+        pos: 0, int(root.height/4)
         size: 400, 400
 
         padding: 60
@@ -18,6 +23,7 @@
 
         Button:
             text: "Powitanie"
+            background_color: (60/255,60/255,60/255,0.5)
             on_press: root.idle()
     FloatLayout:
         Button:
@@ -27,6 +33,7 @@
             size: 300, 100
             text: "Menu"
             on_release: context_menu.show(*app.root_window.mouse_pos)
+            background_color: (60/255,60/255,60/255,0.5)
 
         ContextMenu:
             id: context_menu
@@ -41,4 +48,4 @@
                     ContextMenuTextItem:
                         text: "Dziś"
                     ContextMenuTextItem:
-                        text: "Arhiwum"
+                        text: "Archiwum"
