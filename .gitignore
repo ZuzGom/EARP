@@ -4,7 +4,7 @@
 /bin
 /build
 /dist
-/image
+/nowy
 buildozer.spec
 /__pycache__
 old_main.py

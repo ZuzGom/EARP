@@ -1,17 +1,10 @@
 #:kivy 1.0
-<Warstwa>:
-    canvas.before:
-        Color:
-            rgba: (240/255,201/255,1/255,1)
-        Triangle:
-            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
-    Image:
-        source: "image/pszola.png"
-        pos: root.width - self.width, root.height - self.height
-        size: root.width, root.height - 10
+#:import ScreenManager kivy.uix.screenmanager.ScreenManager
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
 
+
+<Menu>:
     BoxLayout:
-
         id: layout
         
         orientation: "vertical"
@@ -20,11 +13,6 @@
 
         padding: 60
         spacing: 10
-
-        Button:
-            text: "Powitanie"
-            background_color: (60/255,60/255,60/255,0.5)
-            on_press: root.idle()
     FloatLayout:
         Button:
             size_hint: None, None
@@ -41,11 +29,133 @@
             cancel_handler_widget: layout
             ContextMenuTextItem:
                 text: "Ule"
+                on_press: root.now("ule")
+                #on_release: root.manger.current
+                #on_press: root.manger.current = 'ule'
                 #on_press: root.idle()
             ContextMenuTextItem:
                 text: "Alerty"
                 ContextMenu:
                     ContextMenuTextItem:
                         text: "Dziś"
+                        on_press: root.now('alert')
                     ContextMenuTextItem:
                         text: "Archiwum"
+                        on_press: root.now('arch')
+<MenuScreen>:
+    canvas.before:
+        Color:
+            rgba: (240/255,201/255,1/255,1)
+        Triangle:
+            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
+    Image:
+        source: "image/pszola.png"
+        pos: root.width - self.width, root.height - self.height
+        size: root.width, root.height - 10
+    BoxLayout:
+
+        id: layout
+        
+        orientation: "vertical"
+        pos: 0, int(root.height/4)
+        size: 400, 400
+        size_hint: None, None
+        padding: 60
+        spacing: 10
+    BoxLayout:
+        id: layout
+        
+        orientation: "vertical"
+        pos: 0, int(root.height/4)
+        size: 400, 400
+
+        padding: 60
+        spacing: 10
+    Menu:
+
+<Ule>:
+    canvas.before:
+        Color:
+            rgba: (240/255,201/255,1/255,1)
+        Triangle:
+            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
+    Image:
+        source: "image/pszola.png"
+        pos: root.width - self.width, root.height - self.height
+        size: root.width, root.height - 10
+    
+    BoxLayout:
+
+        id: layout
+        
+        orientation: "vertical"
+        pos: 0, int(root.height/4)
+        size: 400, 400
+        size_hint: None, None
+        padding: 60
+        spacing: 10
+        Label:
+            text: "Tu bylby ul"
+    Menu:
+<Alert>:
+    canvas.before:
+        Color:
+            rgba: (240/255,201/255,1/255,1)
+        Triangle:
+            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
+    Image:
+        source: "image/pszola.png"
+        pos: root.width - self.width, root.height - self.height
+        size: root.width, root.height - 10
+    BoxLayout:
+
+        id: layout
+        
+        orientation: "vertical"
+        pos: 0, int(root.height/4)
+        size: 400, 400
+        size_hint: None, None
+
+        padding: 60
+        spacing: 10
+        Label:
+            text: "Tu bylyby alerty"
+            canvas.before:
+                Color: 
+                    rgba: (20/255,20/255,20/255,0.5)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Button:
+            text: "I są"
+            background_color: (60/255,60/255,60/255,0.5)
+            on_press: root.idle()
+    Menu:
+<Notif>:
+    canvas.before:
+        Color:
+            rgba: (240/255,201/255,1/255,1)
+        Triangle:
+            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
+    Image:
+        source: "image/pszola.png"
+        pos: root.width - self.width, root.height - self.height
+        size: root.width, root.height - 10
+    BoxLayout:
+
+        id: layout
+        
+        orientation: "vertical"
+        pos: 0, int(root.height/4)
+        size: 400, 400
+        size_hint: None, None
+        padding: 60
+        spacing: 10
+        Label:
+            text: "Tu bylyby powiadomienia"
+    Menu:    
+
+
+    
+
+    
