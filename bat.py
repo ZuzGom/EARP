@@ -1,4 +1,3 @@
-from getpass import getpass
 from mysql.connector import connect, Error
 
 try:
@@ -10,4 +9,3 @@ try:
         print(connection)
 except Error as e:
     print(e)
-
