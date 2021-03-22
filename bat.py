@@ -18,6 +18,7 @@ def push_err(txt):
     pushniesz wiadomość txt z id_ula 'U' (jak user) i z kodem do ustalenia
     do tabeli alerty (którą trzeba stworzyć)
     '''
+
 def get_ule(id):
     '''
     ta przyszłościowa funkcja służy do pobierania informacji z tabli 'user' z indeksu ule
@@ -26,6 +27,7 @@ def get_ule(id):
     '''
     ule = [1,2]
     return ule
+
 def check_err(id):  #to chcę na zaraz
     '''
     sprawdza ostatni stan stan ula dla jego id z tabeli alerty, 
@@ -35,6 +37,7 @@ def check_err(id):  #to chcę na zaraz
         return False, 'good'
     if id == 0:
         return True, 'bad: error type'
+
 def get_err(id):
     '''
     zwraca ostatnie 10 errorów dla dane id ula
@@ -43,6 +46,7 @@ def get_err(id):
     ['2020-01-17; 18:48:09','E00', 'Nieznany błąd'], 
     ['2020-01-17; 18:48:09','E01', 'Ziąb'], ['2020-01-17; 18:48:09','E03', 'Ucieczka']]
     return tab
+
 def get_inf(id): #to chcę na zaraz
     '''
     ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula o danym id
@@ -62,5 +66,3 @@ def get_all(id, date):
     ['77512020-01-17; 18:48:29; 23.9; 54; 0'   ]
     ['77612020-01-17; 18:48:34; 23.2; 54; 0'   ]]
     return tab
-
-#przygotuj się na więcej ;)    
