@@ -43,9 +43,7 @@ class SettingsScreen(Screen):
 class Ule(Screen):
     pass
 class Alert(Screen):
-    def idle(self):
-        notification.notify(title='Twój ul jest bezpiczny!', 
-        message='poprzez Elektorniczny Asystent Rodziny Pszczelej')
+    pass
     
 class Notif(Screen):
     pass
@@ -71,5 +69,5 @@ except Exception as ex:
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title='Coś poszło nie tak ;(', message=err, timeout=20)
     notification.notify(title='Prosimy o wysłanie maila z błędem', message='Dziękujemy za współpracę', timeout=20)
-    email.send(recipient='zuzgom@gmail.com', subject ='Error', text=ex, create_chooser=True)
+    #email.send(recipient='zuzgom@gmail.com', subject ='Error', text=ex, create_chooser=True)
 

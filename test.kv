@@ -1,6 +1,7 @@
-#:kivy 1.0
+#:kivy 2.0
 #:import ScreenManager kivy.uix.screenmanager.ScreenManager
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import idle nf.idle
 
 
 
@@ -51,7 +52,7 @@
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     Image:
-        source: "image/pszola.png"
+        source: "image/ul.png"
         pos: root.width - self.width, root.height - self.height
         size: root.width, root.height - 10
     
@@ -101,7 +102,7 @@
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     Image:
-        source: "image/pszola.png"
+        source: "image/ul_sad.png"
         pos: root.width - self.width, root.height - self.height
         size: root.width, root.height - 10
     BoxLayout:
@@ -126,7 +127,7 @@
         Button:
             text: "I są"
             background_color: (60/255,60/255,60/255,0.5)
-            on_press: root.idle()
+            on_press: idle()
     Menu:
 <Notif>:
     canvas.before:
@@ -135,7 +136,7 @@
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     Image:
-        source: "image/pszola.png"
+        source: "image/psz1.png"
         pos: root.width - self.width, root.height - self.height
         size: root.width, root.height - 10
     BoxLayout:
