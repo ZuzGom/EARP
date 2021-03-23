@@ -1,5 +1,10 @@
 from plyer import notification, email
-
+from bat import check_err
 def idle():
-    notification.notify(title='Twój ul jest bezpiczny!', 
-    message='poprzez Elektorniczny Asystent Rodziny Pszczelej')
+    b, t = check_err(1)
+    if b:
+        notification.notify(title='Ul wymaga akcji!', 
+        message=t)
+    else:
+        notification.notify(title='Twój ul jest bezpiczny!', 
+        message='poprzez Elektorniczny Asystent Rodziny Pszczelej')

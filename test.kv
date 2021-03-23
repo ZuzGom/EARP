@@ -1,4 +1,4 @@
-#:kivy 2.0
+#:kivy 1.0
 #:import ScreenManager kivy.uix.screenmanager.ScreenManager
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:import idle nf.idle
@@ -42,10 +42,29 @@
                 
 
         
-        
+<BazaGrid@GridLayout>:
+    cols: 4
+    #orientation: "horizontal"
+    canvas.before:
+        Color: 
+            rgba: (20/255,20/255,20/255,0.5)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Image:
+        source: "image/ul.png"
+        size_hint: 1, 1
+    Label:
+        text: "Waga"
+    Label:
+        text: "Temperatura"
+    Label:
+        text: "Wilogtność"     
 
 
 <Ule>:
+
+    
     canvas.before:
         Color:
             rgba: (240/255,201/255,1/255,1)
@@ -66,6 +85,17 @@
             pos: root.width -self.width + 10, root.height - self.height - 50
             size: root.width-20, 2*root.height - 100
             size_hint: None, None
+            spacing: 5
+            
+            BazaGrid:
+                Label:
+                    text: root.data
+                Label:
+                    text: root.waga + "kg"
+                Label:
+                    text: root.temp +"°C"
+                Label:
+                    text: root.humi +"%"
             Label:
                 text: "Tu bylby ul"
                 canvas.before:
@@ -74,20 +104,7 @@
                     Rectangle:
                         pos: self.pos
                         size: self.size
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
+                
             Label:
                 text: "Tu bylby ul"
             Label:
@@ -110,14 +127,14 @@
         id: layout
         
         orientation: "vertical"
-        pos: (root.width -self.width)/2, root.height - 1.5*self.height 
-        size: 400, 400
-        size_hint: None, None
+        pos: (root.width -self.width)/2, root.height - 1.1*self.height 
+        
+        size_hint: 1, 0.5
 
         padding: 60
         spacing: 10
         Label:
-            text: "Tu bylyby alerty"
+            text: "Wszystkie ule są w porządku"
             canvas.before:
                 Color: 
                     rgba: (20/255,20/255,20/255,0.5)
@@ -125,7 +142,7 @@
                     pos: self.pos
                     size: self.size
         Button:
-            text: "I są"
+            text: "Sprawdź"
             background_color: (60/255,60/255,60/255,0.5)
             on_press: idle()
     Menu:
@@ -136,7 +153,7 @@
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     Image:
-        source: "image/psz1.png"
+        source: "image/psz.png"
         pos: root.width - self.width, root.height - self.height
         size: root.width, root.height - 10
     BoxLayout:
@@ -169,33 +186,52 @@
     BoxLayout:
 
         id: layout
+        spacing: 5
+        orientation: "vertical"
+        size: root.width, root.height *0.9
+        pos: 0, 0
+        #pos: (root.width -self.width)/2, root.height - 2*self.height 
         
-        orientation: "horizontal"
-        pos: (root.width -self.width)/2, root.height - 2*self.height 
-        size: 400, 400
         size_hint: None, None
         padding: 60
-        
-        Label: 
-            text: "Tryb ciemny"
-            size_hint: 4,1
-            canvas.before:
-                Color: 
-                    rgba: (20/255,20/255,20/255,0.5)
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+        BoxLayout:
+            orientation: "horizontal"
+            Label: 
+                text: "Tryb ciemny"
+                size_hint: 4,1
+                canvas.before:
+                    Color: 
+                        rgba: (20/255,20/255,20/255,0.5)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
             
-        CheckBox: 
-            on_active: root.checkbox_click(self, self.active) 
-            size_hint: 1,1
-            active: True
-            canvas.before:
-                Color: 
-                    rgba: (20/255,20/255,20/255,0.5)
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+            CheckBox: 
+                on_active: root.checkbox_click(self.active) 
+                size_hint: 1,1
+                active: True
+                canvas.before:
+                    Color: 
+                        rgba: (20/255,20/255,20/255,0.5)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+        BoxLayout:
+            orientation: "horizontal"
+            Label:
+                text:"Powiadomienia"
+                canvas.before:
+                    Color: 
+                        rgba: (20/255,20/255,20/255,0.5)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Button:
+                text: "Zarejestruj"
+                background_color: (60/255,60/255,60/255,0.5)
+            Button:
+                text: "Wyrejestruj"
+                background_color: (60/255,60/255,60/255,0.5)
     Menu:    
 
 

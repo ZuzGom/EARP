@@ -1,21 +1,23 @@
-from mysql.connector import connect, Error
 
-try:
-    with connect(
-        host="ekonomik.atthost24.pl",
-        user="18013_earp",
-        password="earp.123",
-    ) as connection:
-        print(connection)
-except Error as e:
-    print(e)
+def no():
+
+    try:
+        from mysql.connector import connect, Error
+        with connect(
+            host="ekonomik.atthost24.pl",
+            user="18013_earp",
+            password="earp.123",
+        ) as connection:
+            print(connection)
+    except Error as e:
+        print(e)
 
 
 def get_inf(id): #to chcę na zaraz
     '''
     ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula o danym id
     '''
-    data, temp, waga, humi = '2020-01-17 18:48:09', '23.2', '6.4', '68'
+    data, temp, waga, humi = '2020-01-17 \n18:48:09', '23.2', '6.4', '68'
     return data, temp, waga, humi
 
 def get_all(id, date):

@@ -4,6 +4,12 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from plyer import notification
 
+try:
+    from bat import *
+except Exception as ex:
+
+    err = '{}: {})'.format(ex.__class__.__name__, ex)
+    notification.notify(title=err, message=err[50:], timeout=20)
 
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
@@ -39,13 +45,8 @@ class Sett(Screen):
             Window.clearcolor = (250 / 255, 233 / 255, 203 / 255, 1)
 
 
-class SettingsScreen(Screen):
-    pass
-
-
 class Ule(Screen):
-    pass
-
+    data, temp, waga, humi = get_inf(1)
 
 class Alert(Screen):
     pass
@@ -75,6 +76,6 @@ try:
 except Exception as ex:
 
     err = '{}: {})'.format(ex.__class__.__name__, ex)
-    notification.notify(title='Coś poszło nie tak ;(', message=err, timeout=20)
-    notification.notify(title='Prosimy o wysłanie maila z błędem', message='Dziękujemy za współpracę', timeout=20)
+    notification.notify(title=err, message=err[50:], timeout=20)
+    #notification.notify(title='Prosimy o wysłanie maila z błędem', message='Dziękujemy za współpracę', timeout=20)
     # email.send(recipient='zuzgom@gmail.com', subject ='Error', text=ex, create_chooser=True)
