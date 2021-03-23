@@ -1,4 +1,4 @@
-from plyer import notification, email
+from plyer import notification
 from bat import check_err
 def idle():
     b, t = check_err(1)

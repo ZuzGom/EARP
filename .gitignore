@@ -5,6 +5,8 @@
 /build
 /dist
 /nowy
+/mysql
+/mysqlx
 buildozer.spec
 /__pycache__
 /ol

@@ -1,18 +1,19 @@
+from datetime import datetime
+try:
+    from mysql.connector import connect, Error
+    with connect(
+        host="ekonomik.atthost24.pl",
+        user="18013_earp",
+        password="earp.123",
+    ) as connection:
+        print(connection)
+except Error as e:
+    notification.notify(title=e,message=e[50:])
 
-def no():
-
-    try:
-        from mysql.connector import connect, Error
-        with connect(
-            host="ekonomik.atthost24.pl",
-            user="18013_earp",
-            password="earp.123",
-        ) as connection:
-            print(connection)
-    except Error as e:
-        print(e)
-
-
+def data():
+    #funkcja dla mnie, sprawdza czy sie updatuje
+    now = datetime.now()
+    return str(now)
 def get_inf(id): #to chcę na zaraz
     '''
     ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula o danym id

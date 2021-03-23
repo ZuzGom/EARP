@@ -3,20 +3,36 @@ from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from plyer import notification
-
+from threading import Thread
 try:
     from bat import *
 except Exception as ex:
 
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title=err, message=err[50:], timeout=20)
-
+threads=[]
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
 
 # root = root()
 # root = Widget()
+
+class MyClass(object):
+    def __init__(self, a=1):
+        super(MyClass, self).__init__()
+        self.a_min = 0
+        self.a_max = 100
+        self.a = a
+
+    def _get_a(self):
+        return self._a
+    def _set_a(self, value):
+        if value < self.a_min or value > self.a_max:
+            raise ValueError('a out of bounds')
+        self._a = value
+    a = property(_get_a, _set_a)
+
 def manag(scr):
     # scr.add_widget(MenuScreen(name="menu"))
     scr.add_widget(Ule(name="ule"))
@@ -48,8 +64,12 @@ class Sett(Screen):
 class Ule(Screen):
     data, temp, waga, humi = get_inf(1)
 
-class Alert(Screen):
-    pass
+class Alert(Screen):   
+    czas = data()
+    
+    def up(self):
+        czas = data()
+        return czas
 
 
 class Notif(Screen):
@@ -72,7 +92,10 @@ class TestApp(App):
 
 try:
     if __name__ == '__main__':
-        TestApp().run()
+        t = Thread(target=TestApp().run())
+        t.start()
+        threads.append(t)
+        print('ye')
 except Exception as ex:
 
     err = '{}: {})'.format(ex.__class__.__name__, ex)
