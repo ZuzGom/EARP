@@ -41,6 +41,7 @@ def get_inf():
     select_humi = "SELECT wilgotnosc FROM dane WHERE MAX(id_pom)"
     humi = str(execute_read_query(connection, select_humi)[0])
     #Jeszcze musze wyciagnac date
+    connection.disconnect()
     return temp+"°C", waga+ "kg", humi+"%"
 
 def data():
