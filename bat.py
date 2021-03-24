@@ -1,23 +1,6 @@
 from datetime import datetime, timedelta
 from mysql.connector import connect, Error
 
-def data():
-    #funkcja dla mnie, sprawdza czy sie updatuje
-    now = datetime.now()
-    return str(now)
-
-global connection
-
-connection = None
-    try:
-        connection = mysql.connector.connect(
-            host="ekonomik.atthost24.pl",
-            user="18013_earp",
-            password="earp.123",
-        )
-    except Error as e:
-        notification.notify(title=e,message=e[50:])
-
 def execute_read_query(connection, query):
     cursor = connection.cursor()
     result = None
@@ -29,6 +12,16 @@ def execute_read_query(connection, query):
         print(f"The error '{e}' occurred")
 
 def get_inf(id):
+    connection = None
+    try:
+        connection = mysql.connector.connect(
+            host="ekonomik.atthost24.pl",
+            user="18013_earp",
+            password="earp.123",
+        )
+    except Error as e:
+        notification.notify(title=e, message=e[50:])
+
     #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula o danym id
 
     select_temp = "SELECT TOP 1 temperatura FROM dane"
@@ -41,6 +34,11 @@ def get_inf(id):
     humi = execute_read_query(connection, select_humi)
     #Jeszcze musze wyciagnac date
     return temp+"°C", waga+ "kg", humi+"%"
+
+def data():
+    #funkcja dla mnie, sprawdza czy sie updatuje
+    now = datetime.now()
+    return str(now)
 
 '''
 def get_all(id, time):
