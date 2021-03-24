@@ -9,7 +9,6 @@ def polaczenie():
             user="18013_earp",
             password="earp.123",
         )
-
         return connection
     except Error as e:
         notification.notify(title=e, message=e[50:])
@@ -28,21 +27,27 @@ def execute_read_query(connection, query):
 def get_inf():
 
     connection = polaczenie()
-
     #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
-    select_temp = "SELECT temperatura FROM dane WHERE MAX(id_pom)"
-    #ta funkcja execute zwraca ('...')
-    temp = str(execute_read_query(connection, select_temp)[0])
+    if(connection==None):
+        select_temp = "SELECT temperatura FROM dane WHERE MAX(id_pom)"
+        # ta funkcja execute zwraca ('...')
+        temp = str(execute_read_query(connection, select_temp)[0])
 
-    select_waga = "SELECT masa FROM dane WHERE MAX(id_pom)"
-    waga =  str(execute_read_query(connection, select_waga)[0])
+        select_waga = "SELECT masa FROM dane WHERE MAX(id_pom)"
+        waga = str(execute_read_query(connection, select_waga)[0])
 
-    select_humi = "SELECT wilgotnosc FROM dane WHERE MAX(id_pom)"
-    humi = str(execute_read_query(connection, select_humi)[0])
-    #Jeszcze musze wyciagnac date
-    connection.disconnect()
-    return temp+"°C", waga+ "kg", humi+"%"
+        select_humi = "SELECT wilgotnosc FROM dane WHERE MAX(id_pom)"
+        humi = str(execute_read_query(connection, select_humi)[0])
+        # Jeszcze musze wyciagnac date
+        connection.disconnect()
+        return temp + "°C", waga + "kg", humi + "%"
+    else:
+        temp='0'
+        waga='0'
+        humi='0'
+        return temp + "°C", waga + "kg", humi + "%"
+
 
 def data():
     #funkcja dla mnie, sprawdza czy sie updatuje
