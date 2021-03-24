@@ -1,37 +1,45 @@
 from datetime import datetime, timedelta
 from mysql.connector import connect, Error
 
+def polaczenie():
+    connection = None
+    try:
+        connection = connect(
+            host="ekonomik.atthost24.pl",
+            user="18013_earp",
+            password="earp.123",
+        )
+
+        return connection
+    except Error as e:
+        notification.notify(title=e, message=e[50:])
+
+
 def execute_read_query(connection, query):
     cursor = connection.cursor()
-    result = None
     try:
         cursor.execute(query)
         result = cursor.fetchall()
         return result
     except Error as e:
-        print(f"The error '{e}' occurred")
+        result = '0'
+        return result
 
-def get_inf(id):
-    connection = None
-    try:
-        connection = mysql.connector.connect(
-            host="ekonomik.atthost24.pl",
-            user="18013_earp",
-            password="earp.123",
-        )
-    except Error as e:
-        notification.notify(title=e, message=e[50:])
+def get_inf():
 
-    #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula o danym id
+    connection = polaczenie()
 
-    select_temp = "SELECT TOP 1 temperatura FROM dane"
-    temp = execute_read_query(connection, select_temp)
+    #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
-    select_waga = "SELECT TOP 1 masa FROM dane"
-    waga =  execute_read_query(connection, select_waga)
+    select_temp = "SELECT temperatura FROM dane WHERE MAX(id_pom)"
+    #ta funkcja execute zwraca ('...')
+    temp = str(execute_read_query(connection, select_temp)[0])
 
-    select_humi = "SELECT TOP 1 wilgotnosc FROM dane"
-    humi = execute_read_query(connection, select_humi)
+    select_waga = "SELECT masa FROM dane WHERE MAX(id_pom)"
+    waga =  str(execute_read_query(connection, select_waga)[0])
+
+    select_humi = "SELECT wilgotnosc FROM dane WHERE MAX(id_pom)"
+    humi = str(execute_read_query(connection, select_humi)[0])
     #Jeszcze musze wyciagnac date
     return temp+"°C", waga+ "kg", humi+"%"
 
@@ -39,6 +47,8 @@ def data():
     #funkcja dla mnie, sprawdza czy sie updatuje
     now = datetime.now()
     return str(now)
+
+get_inf()
 
 '''
 def get_all(id, time):
