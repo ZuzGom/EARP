@@ -24,6 +24,7 @@ def execute_read_query(connection, query):
         result = '0'
         return result
 
+
 def get_inf():
 
     connection = polaczenie()
@@ -54,7 +55,6 @@ def data():
     now = datetime.now()
     return str(now)
 
-get_inf()
 
 '''
 def get_all(id, time):
@@ -63,8 +63,7 @@ def get_all(id, time):
     zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
    
     date = datetime.now()-timedelta(minutes=time)
-    #od tej daty ^
-    #wiem, jestem wspaniala, ze to za ciebie zrobilam nie musisz dziekowac
+    #od tej daty ^ 
 
     tab = [['77112020-01-17',' 18:48:09',' 24',' 54',' 0'],
     ['77212020-01-17',' 18:48:14',' 23.2',' 55',' 0'],
@@ -86,6 +85,7 @@ def get_ule(id):
     ule = [1,2]
     return ule
 
+
 def push_err(txt):
     mess = txt
     
@@ -104,6 +104,7 @@ def check_err(id):  #to chcę na zaraz
         return False, 'good'
     if id == 0:
         return True, 'bad: error type'
+
 
 def get_err(id):
     
