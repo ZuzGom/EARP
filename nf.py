@@ -1,7 +1,6 @@
 from plyer import notification
-from bat import check_err
 def idle():
-    b, t = check_err(1)
+    b, t = 0, "good"
     if b:
         notification.notify(title='Ul wymaga akcji!', 
         message=t)
