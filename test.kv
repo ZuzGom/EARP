@@ -74,10 +74,6 @@
             rgba: (240/255,201/255,1/255,1)
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
-    Image:
-        source: "image/psz.png"
-        pos: root.width - self.width, root.height - self.height
-        size: root.width, root.height - 10
     
     ScrollView:
         size: 500, 2*root.height
@@ -155,19 +151,64 @@
             rgba: (240/255,201/255,1/255,1)
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
-    
+    BoxLayout:
+        orientation: "vertical"
+        pos: 0, root.height - 0.5*self.height
+        #pos: (root.width - self.width)/2, int(root.height/4)
+        #size: 400, 400
+        #size_hint: 1, 0.8
+        padding: 60
+        spacing: 10
+        on_parent: dropdown.dismiss()
+        DropDown:
+
+            id: dropdown
+            
+            on_select: btn.text = '{}'.format(args[1])
+
+            Button:
+                text: '10min'
+                size_hint_y: None
+                height: '48dp'
+                on_release: root.updt(self.text,10)
+
+            Button:
+                text: '30min'
+                size_hint_y: None
+                height: '48dp'
+                on_release: root.updt(self.text,30)
+            Button:
+                text: '1h'
+                size_hint_y: None
+                height: '48dp'
+                on_release: root.updt(self.text,60)
+            Button:
+                text: '1d'
+                size_hint_y: None
+                height: '48dp'
+                on_release: root.updt(self.text,1440)
     BoxLayout:
 
-        id: wykres
+        id: box
         
         orientation: "vertical"
         pos: 0, 0
         #pos: (root.width - self.width)/2, int(root.height/4)
         #size: 400, 400
-        size_hint: 1, 1
+        size_hint: 1, 0.9
         padding: 60
         spacing: 10
-        Wykres:
+        Button:
+            id: btn
+            text: 'Okres czasu'
+            on_release: dropdown.open(self)
+            size_hint_y: None
+            height: '48dp'
+        BoxLayout:
+            id: wykres        
+            orientation: "vertical"
+            Wykres:
+                id: clapl
         Image:
             source: "image/psz.png"
             size_hint: 1, 0.5
@@ -210,13 +251,23 @@
         BoxLayout:
             orientation: "horizontal"
             CoLabel:
-                text:"Powiadomienia"
+                text:"Powiadomienia:"
             Button:
                 text: "Zarejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
             Button:
                 text: "Wyrejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
+        BoxLayout:
+            orientation: "horizontal"
+            CoLabel:
+                text:"Status obecny powiadomień: "
+                size_hint: 2,1
+            CoLabel:
+                id: status
+                size_hint: 1,1
+                text: root.stts
+
     Menu:    
 
 

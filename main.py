@@ -59,6 +59,8 @@ class Menu(FloatLayout):
     @staticmethod
     def now(name):
         sm.current = name
+        #Notif.init(self)
+        
 
 class Sett(Screen):
     @staticmethod
@@ -67,12 +69,19 @@ class Sett(Screen):
             Window.clearcolor = (40 / 255, 40 / 255, 40 / 255, 1)
         else:
             Window.clearcolor = (250 / 255, 233 / 255, 203 / 255, 1)
-
-
+    stts="Nieaktywne"
+global ul_id
+ul_id = 1
 class Ule(Screen):
+    
     data, temp, waga, humi = get_inf(1)
     def up(self):
-        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf(1)
+        global ul_id
+        if ul_id == 1:
+            ul_id += 1
+        else: 
+            ul_id -= 1
+        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf(ul_id)
 
 class Alert(Screen):   
     czas = data()
@@ -80,6 +89,36 @@ class Alert(Screen):
     def up(self):
         czas = data()
         self.ids.tim.text = czas
+
+class Notif(Screen):
+    
+    def init(self):
+        self.ids.dropdown.dismiss()
+    def updt(self,text, time):
+        self.ids.dropdown.select(text)
+        dane = get_all(id, 2001)
+        pltem=[]
+        plwg=[]
+        plhum=[]
+        self.ids.wykres.clear_widgets()
+        ax.clear()
+        
+        ax.patch.set_facecolor('black')
+        ax.patch.set_alpha(0.4)
+        ax.tick_params(colors='white', which='both')
+
+        
+        for x in dane:
+            pltem.append(float(x[2]))
+            plhum.append(float(x[3]))
+            plwg.append(float(x[4]))
+        plt.plot(pltem)
+        plt.plot(plhum)
+        plt.plot(plwg)
+        
+        
+        self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
 
 try:
     ule = [[x] for x in get_ule('001')]
@@ -110,8 +149,7 @@ class Wykres(FigureCanvasKivyAgg):
     def __init__(self, **kwargs):
         super(Wykres, self).__init__(plt.gcf(), **kwargs)
 
-class Notif(Screen):
-    pass
+
 
 
 # sm = ScreenManager()
