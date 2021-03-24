@@ -1,16 +1,22 @@
 from kivy.app import App
 from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from plyer import notification
-from threading import Thread
+#from threading import Thread
+from gardenmat.backend_kivyagg import FigureCanvasKivyAgg
+import matplotlib.pyplot as plt
+from bat import *
+'''
 try:
-    from bat import *
+    
 except Exception as ex:
 
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title=err, message=err[50:], timeout=20)
-threads=[]
+'''
+#threads=[]
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
 # property manager that gives you the instance of the ScreenManager used.
@@ -18,7 +24,10 @@ threads=[]
 # root = root()
 # root = Widget()
 
-class MyClass(object):
+    
+
+'''
+class Klasa(object):
     def __init__(self, a=1):
         super(MyClass, self).__init__()
         self.a_min = 0
@@ -32,7 +41,7 @@ class MyClass(object):
             raise ValueError('a out of bounds')
         self._a = value
     a = property(_get_a, _set_a)
-
+'''
 def manag(scr):
     # scr.add_widget(MenuScreen(name="menu"))
     scr.add_widget(Ule(name="ule"))
@@ -41,7 +50,7 @@ def manag(scr):
     scr.add_widget(Sett(name="set"))
 
 
-global MenuScreen, Ule, Alert, sm
+global MenuScreen, Ule, Alert, sm, czas
 
 sm = ScreenManager()
 
@@ -50,7 +59,6 @@ class Menu(FloatLayout):
     @staticmethod
     def now(name):
         sm.current = name
-
 
 class Sett(Screen):
     @staticmethod
@@ -63,14 +71,44 @@ class Sett(Screen):
 
 class Ule(Screen):
     data, temp, waga, humi = get_inf(1)
+    def up(self):
+        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf(1)
 
 class Alert(Screen):   
     czas = data()
     
     def up(self):
         czas = data()
-        return czas
+        self.ids.tim.text = czas
 
+try:
+    ule = [[x] for x in get_ule('001')]
+    dane = get_all(id, 2001)
+    pltem=[]
+    plwg=[]
+    plhum=[]
+    for x in dane:
+        pltem.append(float(x[2]))
+        plhum.append(float(x[3]))
+        plwg.append(float(x[4]))
+    fig = plt.figure()
+    fig.patch.set_facecolor('black')
+    fig.patch.set_alpha(0.0)
+
+    ax = fig.add_subplot(111)
+    ax.patch.set_facecolor('black')
+    ax.patch.set_alpha(0.4)
+    ax.tick_params(colors='white', which='both')
+    plt.plot(pltem)
+    plt.plot(plhum)
+    plt.plot(plwg)
+except Exception as ex:
+    err = '{}: {})'.format(ex.__class__.__name__, ex)
+    notification.notify(title=err, message=err[50:], timeout=20)
+
+class Wykres(FigureCanvasKivyAgg):
+    def __init__(self, **kwargs):
+        super(Wykres, self).__init__(plt.gcf(), **kwargs)
 
 class Notif(Screen):
     pass
@@ -84,6 +122,7 @@ class TestApp(App):
 
     def build(self):
         # sm = ScreenManager()
+        #Notif.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
         manag(sm)
         return sm
 
@@ -92,13 +131,17 @@ class TestApp(App):
 
 try:
     if __name__ == '__main__':
+        TestApp().run()
+        '''
         t = Thread(target=TestApp().run())
         t.start()
         threads.append(t)
         print('ye')
+        '''
 except Exception as ex:
-
+    print(ex)
     err = '{}: {})'.format(ex.__class__.__name__, ex)
+    print(err)
     notification.notify(title=err, message=err[50:], timeout=20)
     #notification.notify(title='Prosimy o wysłanie maila z błędem', message='Dziękujemy za współpracę', timeout=20)
     # email.send(recipient='zuzgom@gmail.com', subject ='Error', text=ex, create_chooser=True)

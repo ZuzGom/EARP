@@ -1,4 +1,4 @@
-from datetime import datetime
+#from datetime import datetime
 try:
     from mysql.connector import connect, Error
     with connect(
@@ -12,26 +12,28 @@ except Error as e:
 
 def data():
     #funkcja dla mnie, sprawdza czy sie updatuje
-    now = datetime.now()
-    return str(now)
+    #now = datetime.now()
+    return "1234"
 def get_inf(id): #to chcę na zaraz
     '''
     ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula o danym id
     '''
-    data, temp, waga, humi = '2020-01-17 \n18:48:09', '23.2', '6.4', '68'
-    return data, temp, waga, humi
+    dic = {1:('2020-01-17 \n18:48:09', '23.2', '6.4', '68'),2:('2020-01-17 \n18:48:09', '24', '7.0', '80')}
+    data, temp, waga, humi = dic[id]
+    return data, temp+"°C", waga+ "kg", humi+"%"
 
 def get_all(id, date):
     '''
     przyszlosciowa funkcja
     zwraca listę dwuwymiarową z danymi od danej daty do dnia dzisiejszego
     '''
-    tab = [['77112020-01-17; 18:48:09; 24; 54; 0'],
-    ['77212020-01-17; 18:48:14; 23.2; 55; 0'],
-    ['77312020-01-17; 18:48:19; 23.8; 59; 0'],
-    ['77412020-01-17; 18:48:24; 23.8; 56; 0'],
-    ['77512020-01-17; 18:48:29; 23.9; 54; 0'],
-    ['77612020-01-17; 18:48:34; 23.2; 54; 0']]
+    
+    tab = [['77112020-01-17',' 18:48:09',' 24',' 54',' 0'],
+    ['77212020-01-17',' 18:48:14',' 23.2',' 55',' 0'],
+    ['77312020-01-17',' 18:48:19',' 23.8',' 59',' 0'],
+    ['77412020-01-17',' 18:48:24',' 23.8',' 56',' 0'],
+    ['77512020-01-17',' 18:48:29',' 23.9',' 54',' 0'],
+    ['77612020-01-17',' 18:48:34',' 23.2',' 54',' 0']]
     return tab
 
 #TEGO POD SPODEM NA RAZIE NIE RÓB

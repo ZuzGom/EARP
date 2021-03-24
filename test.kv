@@ -2,47 +2,17 @@
 #:import ScreenManager kivy.uix.screenmanager.ScreenManager
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:import idle nf.idle
-
-
-
-
-<Menu>:
-    FloatLayout:
-        #size: 500, 400
-        #size_hint: 1, 1
-        BoxLayout:
-            #padding: 60
-            spacing: self.width/100
-            orientation: "horizontal"
-            pos: 0, root.height - self.height - 10
-            #size: 500, 400 
-            size_hint_y: None
-            Button:
-                text: "Ule"
-                background_color: (60/255,60/255,60/255,0.5)
-                on_press: root.now("ule")
-                size_hint_y: None
-            Button:
-                text: "Alerty"
-                background_color: (60/255,60/255,60/255,0.5)
-                on_press: root.now('alert')
-                size_hint_y: None
-                #height: '48dp'
-            Button:
-                text: "Archiwum"
-                background_color: (60/255,60/255,60/255,0.5)
-                on_press: root.now('arch')
-                size_hint_y: None
-                #height: '48dp'
-            Button:
-                text: "Ustawienia"
-                background_color: (60/255,60/255,60/255,0.5)
-                on_press: root.now('set')
-                size_hint_y: None
-                
-
-        
-<BazaGrid@GridLayout>:
+   
+<Button>
+    background_color: (60/255,60/255,60/255,0.5)
+<CoLabel@Label>
+    canvas.before:
+        Color: 
+            rgba: (20/255,20/255,20/255,0.5)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<BazaGrid@GridLayout>
     cols: 4
     #orientation: "horizontal"
     canvas.before:
@@ -59,10 +29,44 @@
     Label:
         text: "Temperatura"
     Label:
-        text: "Wilogtność"     
+        text: "Wilgotność" 
+<Menu>
+    FloatLayout:
+        #size: 500, 400
+        #size_hint: 1, 1
+        BoxLayout:
+            #padding: 60
+            spacing: self.width/100
+            orientation: "horizontal"
+            pos: 0, root.height - self.height - 10
+            #size: 500, 400 
+            size_hint_y: None
+            Button:
+                text: "Ule"                
+                on_press: root.now("ule")
+                size_hint_y: None
+            Button:
+                text: "Alerty"                
+                on_press: root.now('alert')
+                size_hint_y: None
+                #height: '48dp'
+            Button:
+                text: "Archiwum"
+                on_press: root.now('arch')
+                #on_press: Notif.wyk()
+                size_hint_y: None
+                #height: '48dp'
+            Button:
+                text: "Ustawienia"                
+                on_press: root.now('set')
+                size_hint_y: None
+                
+
+        
+ 
 
 
-<Ule>:
+<Ule>
 
     
     canvas.before:
@@ -71,7 +75,7 @@
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     Image:
-        source: "image/ul.png"
+        source: "image/psz.png"
         pos: root.width - self.width, root.height - self.height
         size: root.width, root.height - 10
     
@@ -86,25 +90,25 @@
             size: root.width-20, 2*root.height - 100
             size_hint: None, None
             spacing: 5
-            
+            Button:
+                text: "Odśwież"
+                on_press: root.up()
+                size_hint: 1,0.5 
             BazaGrid:
                 Label:
+                    id: dat
                     text: root.data
                 Label:
-                    text: root.waga + "kg"
+                    id: wei
+                    text: root.waga 
                 Label:
-                    text: root.temp +"°C"
+                    id: tem
+                    text: root.temp 
                 Label:
-                    text: root.humi +"%"
+                    id:hum
+                    text: root.humi 
             Label:
-                text: "Tu bylby ul"
-                canvas.before:
-                    Color: 
-                        rgba: (20/255,20/255,20/255,0.5)
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                
+                text: "Tu bylby ul"               
             Label:
                 text: "Tu bylby ul"
             Label:
@@ -112,7 +116,7 @@
             Label:
                 text: "Tu bylby ul"
     Menu:
-<Alert>:
+<Alert>
     canvas.before:
         Color:
             rgba: (240/255,201/255,1/255,1)
@@ -133,51 +137,41 @@
 
         padding: 60
         spacing: 10
-        Label:
+        CoLabel:
             text: "Wszystkie ule są w porządku"
-            canvas.before:
-                Color: 
-                    rgba: (20/255,20/255,20/255,0.5)
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
         Button:
+            id: tim
             text: root.czas
             on_press: root.up()
+            
         Button:
             text: "Sprawdź"
             background_color: (60/255,60/255,60/255,0.5)
             on_press: idle()
     Menu:
-<Notif>:
+<Notif>
     canvas.before:
         Color:
             rgba: (240/255,201/255,1/255,1)
         Triangle:
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
-    Image:
-        source: "image/psz.png"
-        pos: root.width - self.width, root.height - self.height
-        size: root.width, root.height - 10
+    
     BoxLayout:
 
-        id: layout
+        id: wykres
         
         orientation: "vertical"
-        pos: (root.width - self.width)/2, int(root.height/4)
-        size: 400, 400
-        size_hint: None, None
+        pos: 0, 0
+        #pos: (root.width - self.width)/2, int(root.height/4)
+        #size: 400, 400
+        size_hint: 1, 1
         padding: 60
         spacing: 10
-        Label:
-            size_hint: 2, 1
-            text: "Tu bylyby dzikie wykresy"
-            canvas.before:
-                Color: 
-                    rgba: (20/255,20/255,20/255,0.5)
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+        Wykres:
+        Image:
+            source: "image/psz.png"
+            size_hint: 1, 0.5
+            
     Menu:    
 <Sett>:
     canvas.before:
@@ -199,15 +193,9 @@
         padding: 60
         BoxLayout:
             orientation: "horizontal"
-            Label: 
+            CoLabel: 
                 text: "Tryb ciemny"
                 size_hint: 4,1
-                canvas.before:
-                    Color: 
-                        rgba: (20/255,20/255,20/255,0.5)
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
             
             CheckBox: 
                 on_active: root.checkbox_click(self.active) 
@@ -221,14 +209,8 @@
                         size: self.size
         BoxLayout:
             orientation: "horizontal"
-            Label:
+            CoLabel:
                 text:"Powiadomienia"
-                canvas.before:
-                    Color: 
-                        rgba: (20/255,20/255,20/255,0.5)
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
             Button:
                 text: "Zarejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
