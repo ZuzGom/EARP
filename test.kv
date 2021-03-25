@@ -76,14 +76,14 @@
             points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     
     ScrollView:
-        size: 500, 2*root.height
+        size: 500, root.height
         pos: root.width - self.width, root.height - self.height - 200
         BoxLayout:
             id: layout
         
             orientation: "vertical"
             pos: root.width -self.width + 10, root.height - self.height - 50
-            size: root.width-20, 2*root.height - 100
+            size: root.width-20, root.height - 100
             size_hint: None, None
             spacing: 5
             Button:
@@ -104,13 +104,8 @@
                     id:hum
                     text: root.humi 
             Label:
-                text: "Tu bylby ul"               
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
-            Label:
-                text: "Tu bylby ul"
+                text: ""               
+            
     Menu:
 <Alert>
     canvas.before:
@@ -127,9 +122,9 @@
         id: layout
         
         orientation: "vertical"
-        pos: (root.width -self.width)/2, root.height - 1.1*self.height 
+        pos: 0, 0 
         
-        size_hint: 1, 0.5
+        size_hint: 1, 0.9
 
         padding: 60
         spacing: 10
@@ -139,7 +134,11 @@
             id: tim
             text: root.czas
             on_press: root.up()
-            
+        
+        Label:
+            text:""
+        Label:
+            text:""
         Button:
             text: "Sprawdź"
             background_color: (60/255,60/255,60/255,0.5)
@@ -226,11 +225,11 @@
         id: layout
         spacing: 5
         orientation: "vertical"
-        size: root.width, root.height *0.9
+        #size: root.width, root.height *0.9
         pos: 0, 0
         #pos: (root.width -self.width)/2, root.height - 2*self.height 
         
-        size_hint: None, None
+        size_hint: 1, 0.9
         padding: 60
         BoxLayout:
             orientation: "horizontal"
@@ -267,6 +266,8 @@
                 id: status
                 size_hint: 1,1
                 text: root.stts
+        CoLabel:
+            text: "W razie wystąpienia błędu \nproszę o kontakt:\n   zuzgom@gmail.com"
 
     Menu:    
 

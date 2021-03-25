@@ -44,12 +44,12 @@ def get_inf():
         humi = str(execute_read_query(connection, select_humi)[0])
         # Jeszcze musze wyciagnac date
         connection.disconnect()
-        return temp + "°C", waga + "kg", humi + "%"
+        return "No brawo", temp + "°C", waga + "kg", humi + "%"
     else:
         temp='0'
         waga='0'
         humi='0'
-        return temp + "°C", waga + "kg", humi + "%"
+        return "Bati zrób te date plis", temp + "°C", waga + "kg", humi + "%"
 
 
 def data():
@@ -61,15 +61,16 @@ polaczenie()
 
 print(get_inf())
 
-'''
+
 def get_all(id, time):
-    ''
-    przyszlosciowa funkcja
-    zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
+    
+    #przyszlosciowa funkcja
+    #zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
    
     date = datetime.now()-timedelta(minutes=time)
     #od tej daty ^ 
 
+    #licza sie dla mnie trzy ostatnie indeksy
     tab = [['77112020-01-17',' 18:48:09',' 24',' 54',' 0'],
     ['77212020-01-17',' 18:48:14',' 23.2',' 55',' 0'],
     ['77312020-01-17',' 18:48:19',' 23.8',' 59',' 0'],
@@ -79,7 +80,7 @@ def get_all(id, time):
     return tab
 
 
-#TEGO POD SPODEM NA RAZIE NIE RÓB
+'''
 
 def get_ule(id):
     

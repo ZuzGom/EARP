@@ -70,18 +70,14 @@ class Sett(Screen):
         else:
             Window.clearcolor = (250 / 255, 233 / 255, 203 / 255, 1)
     stts="Nieaktywne"
-global ul_id
-ul_id = 1
+
+
 class Ule(Screen):
     
-    data, temp, waga, humi = get_inf(1)
+    data, temp, waga, humi = get_inf()
     def up(self):
         global ul_id
-        if ul_id == 1:
-            ul_id += 1
-        else: 
-            ul_id -= 1
-        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf(ul_id)
+        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf()
 
 class Alert(Screen):   
     czas = data()
@@ -122,7 +118,7 @@ class Notif(Screen):
 
 try:
     ule = [[x] for x in get_ule('001')]
-    dane = get_all(id, 2001)
+    dane = get_all(id, 100)
     pltem=[]
     plwg=[]
     plhum=[]
