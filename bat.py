@@ -20,19 +20,22 @@ def execute_read_query(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
+        print('no')
+        #print()
         result = cursor.fetchall()
         return result
     except Error as e:
+        print(e)
         result = '0'
         return result
-
+#https://stackoverflow.com/questions/4005409/error-1046-no-database-selected-how-to-resolve
 
 def get_inf():
 
     connection = polaczenie()
     #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
-    if(connection==None):
+    if(connection!=None):
         select_temp = "SELECT temperatura FROM dane WHERE MAX(id_pom)"
         # ta funkcja execute zwraca ('...')
         temp = str(execute_read_query(connection, select_temp)[0])
