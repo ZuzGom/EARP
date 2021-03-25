@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 from mysql.connector import connect, Error
 
+global connection
+
 def polaczenie():
-    connection = None
     try:
         connection = connect(
             host="ekonomik.atthost24.pl",
@@ -12,6 +13,7 @@ def polaczenie():
         return connection
     except Error as e:
         notification.notify(title=e, message=e[50:])
+
 
 
 def execute_read_query(connection, query):
@@ -55,6 +57,9 @@ def data():
     now = datetime.now()
     return str(now)
 
+polaczenie()
+
+print(get_inf())
 
 '''
 def get_all(id, time):
