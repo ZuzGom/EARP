@@ -46,6 +46,9 @@ def get_inf():
 
         select_data = "SELECT data FROM dane WHERE id_pom=795"
         data = str(execute_read_query(connection, select_data)[0][0])
+        kalendarz = data[0:10]
+        zegar = data[11:19]
+        data = kalendarz + "\n" + zegar
         connection.disconnect()
         return data, temp + "°C", waga + "kg", humi + "%"
     else:
