@@ -35,6 +35,9 @@ def get_inf():
     #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
     if(connection!=None):
+
+        select_baza = "SELECT * FROM dane"
+        print(execute_read_query(connection, select_baza)[-1])
         select_temp = "SELECT temperatura FROM dane WHERE id_pom=795"
         # ta funkcja execute zwraca ('...')
         temp = str(execute_read_query(connection, select_temp)[0][0])
@@ -53,7 +56,7 @@ def get_inf():
         humi='0'
         return "Bati zrób te date plis", temp + "°C", waga + "kg", humi + "%"
 
-
+get_inf()
 def data():
     #funkcja dla mnie, sprawdza czy sie updatuje
     now = datetime.now()
