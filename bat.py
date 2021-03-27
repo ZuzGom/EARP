@@ -62,7 +62,7 @@ def data():
 
 get_inf()
 
-'''
+
 def get_all(id, time):
     #przyszlosciowa funkcja
     #zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
@@ -79,7 +79,7 @@ def get_all(id, time):
     ['77612020-01-17',' 18:48:34',' 23.2',' 54',' 0']]
     return tab
 
-
+'''
 
 def get_ule(id):
     
