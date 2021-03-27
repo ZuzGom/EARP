@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 from mysql.connector import connect, Error
 
-global connection
-
 def polaczenie():
     try:
         connection = connect(
@@ -24,14 +22,13 @@ def execute_read_query(connection, query):
         result = cursor.fetchall()
         return result
     except Error as e:
-        print(e)
         result = '0'
         return result
 
 
+#ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 def get_inf():
     connection = polaczenie()
-    #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
     if(connection!=None):
         select_temp = "SELECT temperatura FROM dane WHERE id_pom=795"
@@ -42,33 +39,33 @@ def get_inf():
 
         select_humi = "SELECT wilgotnosc FROM dane WHERE id_pom=795"
         humi = str(execute_read_query(connection, select_humi)[0][0])
-        # Jeszcze musze wyciagnac date
 
         select_data = "SELECT data FROM dane WHERE id_pom=795"
         data = str(execute_read_query(connection, select_data)[0][0])
         kalendarz = data[0:10]
         zegar = data[11:19]
         data = kalendarz + "\n" + zegar
+
         connection.disconnect()
-        return data, temp + "°C", waga + "kg", humi + "%"
+        return data, temp + '°C', waga + 'kg', humi + '%'
     else:
         temp='0'
         waga='0'
         humi='0'
-        return "Bati zrób te date plis", temp + "°C", waga + "kg", humi + "%"
+        data = "00-00-0000 \n 00:00:00"
+
+        return data, temp + '°C', waga + 'kg', humi + "%"
 
 
+#funkcja dla Zuzi, sprawdza czy sie updatuje
 def data():
-    #funkcja dla mnie, sprawdza czy sie updatuje
     now = datetime.now()
     return str(now)
 
-get_inf()
 
-
+#przyszlosciowa funkcja
+#zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
 def get_all(id, time):
-    #przyszlosciowa funkcja
-    #zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
    
     date = datetime.now()-timedelta(minutes=time)
     #od tej daty ^ 
@@ -103,7 +100,8 @@ def push_err(txt):
     do tabeli alerty (którą trzeba stworzyć)
     
 
-def check_err(id):  #to chcę na zaraz
+                                                                                                        #to chcę na zaraz
+def check_err(id):
     
     sprawdza ostatni stan stan ula dla jego id z tabeli alerty, 
     jesli nie ma erroru zwraca w ciagu ostatnich 5 minut daje False
