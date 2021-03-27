@@ -36,14 +36,14 @@ def get_inf():
     #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
     if(connection!=None):
-        select_temp = "SELECT temperatura FROM dane WHERE MAX(id_pom)"
+        select_temp = "SELECT temperatura FROM dane WHERE id_pom=795"
         # ta funkcja execute zwraca ('...')
         temp = str(execute_read_query(connection, select_temp)[0])
 
-        select_waga = "SELECT masa FROM dane WHERE MAX(id_pom)"
+        select_waga = "SELECT masa FROM dane WHERE id_pom=795"
         waga = str(execute_read_query(connection, select_waga)[0])
 
-        select_humi = "SELECT wilgotnosc FROM dane WHERE MAX(id_pom)"
+        select_humi = "SELECT wilgotnosc FROM dane WHERE id_pom=795"
         humi = str(execute_read_query(connection, select_humi)[0])
         # Jeszcze musze wyciagnac date
         connection.disconnect()
