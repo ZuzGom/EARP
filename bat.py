@@ -30,16 +30,11 @@ def execute_read_query(connection, query):
 
 
 def get_inf():
-
     connection = polaczenie()
     #ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
 
     if(connection!=None):
-
-        select_baza = "SELECT * FROM dane"
-        print(execute_read_query(connection, select_baza)[-1])
         select_temp = "SELECT temperatura FROM dane WHERE id_pom=795"
-        # ta funkcja execute zwraca ('...')
         temp = str(execute_read_query(connection, select_temp)[0][0])
 
         select_waga = "SELECT masa FROM dane WHERE id_pom=795"
@@ -48,23 +43,27 @@ def get_inf():
         select_humi = "SELECT wilgotnosc FROM dane WHERE id_pom=795"
         humi = str(execute_read_query(connection, select_humi)[0][0])
         # Jeszcze musze wyciagnac date
+
+        select_data = "SELECT data FROM dane WHERE id_pom=795"
+        data = str(execute_read_query(connection, select_data)[0][0])
         connection.disconnect()
-        return "No brawo", temp + "°C", waga + "kg", humi + "%"
+        return data, temp + "°C", waga + "kg", humi + "%"
     else:
         temp='0'
         waga='0'
         humi='0'
         return "Bati zrób te date plis", temp + "°C", waga + "kg", humi + "%"
 
-get_inf()
+
 def data():
     #funkcja dla mnie, sprawdza czy sie updatuje
     now = datetime.now()
     return str(now)
 
+get_inf()
 
+'''
 def get_all(id, time):
-    
     #przyszlosciowa funkcja
     #zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
    
@@ -81,7 +80,6 @@ def get_all(id, time):
     return tab
 
 
-'''
 
 def get_ule(id):
     
