@@ -9,6 +9,7 @@ def polaczenie():
             host="ekonomik.atthost24.pl",
             user="18013_earp",
             password="earp.123",
+            database="18013_earp"
         )
         return connection
     except Error as e:
@@ -20,15 +21,13 @@ def execute_read_query(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
-        print('no')
-        #print()
         result = cursor.fetchall()
         return result
     except Error as e:
         print(e)
         result = '0'
         return result
-#https://stackoverflow.com/questions/4005409/error-1046-no-database-selected-how-to-resolve
+
 
 def get_inf():
 
@@ -59,10 +58,6 @@ def data():
     #funkcja dla mnie, sprawdza czy sie updatuje
     now = datetime.now()
     return str(now)
-
-polaczenie()
-
-print(get_inf())
 
 
 def get_all(id, time):
