@@ -1,6 +1,5 @@
 #:kivy 1.0
 #:import ScreenManager kivy.uix.screenmanager.ScreenManager
-#:import FadeTransition kivy.uix.screenmanager.FadeTransition
 #:import idle nf.idle
    
 <Button>
@@ -30,11 +29,24 @@
         text: "Temperatura"
     Label:
         text: "Wilgotność" 
+
+
 <Menu>
     FloatLayout:
         #size: 500, 400
         #size_hint: 1, 1
         BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: (1,1,1,1)
+                Rectangle:
+                    #pos: self.pos
+                    #size: self.size
+                    texture: root.texture
+                    pos: 0, root.height-1.5*self.height
+                    size: root.width, 3*self.height
+
+            
             #padding: 60
             spacing: self.width/100
             orientation: "horizontal"
@@ -68,13 +80,6 @@
 
 <Ule>
 
-    
-    canvas.before:
-        Color:
-            rgba: (240/255,201/255,1/255,1)
-        Triangle:
-            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
-    
     ScrollView:
         size: 500, root.height
         pos: root.width - self.width, root.height - self.height - 200
@@ -108,11 +113,6 @@
             
     Menu:
 <Alert>
-    canvas.before:
-        Color:
-            rgba: (240/255,201/255,1/255,1)
-        Triangle:
-            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     Image:
         source: "image/ul_sad.png"
         pos: root.width - self.width, root.height - self.height
@@ -145,17 +145,12 @@
             on_press: idle()
     Menu:
 <Notif>
-    canvas.before:
-        Color:
-            rgba: (240/255,201/255,1/255,1)
-        Triangle:
-            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
     BoxLayout:
         orientation: "vertical"
         pos: 0, root.height - 0.5*self.height
         #pos: (root.width - self.width)/2, int(root.height/4)
         #size: 400, 400
-        #size_hint: 1, 0.8
+        #size_hint: 1, 0.9
         padding: 60
         spacing: 10
         on_parent: dropdown.dismiss()
@@ -214,12 +209,6 @@
             
     Menu:    
 <Sett>:
-    canvas.before:
-        Color:
-            rgba: (240/255,201/255,1/255,1)
-        Triangle:
-            points: [int(2 * root.width), root.height, 0, int(0.9*root.height), 0, root.height]
-
     BoxLayout:
 
         id: layout
@@ -266,8 +255,14 @@
                 id: status
                 size_hint: 1,1
                 text: root.stts
-        CoLabel:
-            text: "W razie wystąpienia błędu \nproszę o kontakt:\n   zuzgom@gmail.com"
+        BoxLayout:
+            orientation: "horizontal"
+            CoLabel:
+                text: "W razie wystąpienia błędu \nproszę o kontakt:\n   zuzgom@gmail.com"
+                size_hint: 2, 1
+            Image:
+                source: "image/LOG.png"
+                size_hint: 1, 1
 
     Menu:    
 
