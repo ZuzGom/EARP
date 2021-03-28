@@ -31,8 +31,11 @@ def get_inf():
     connection = polaczenie()
 
     if(connection!=None):
-        select_temp = "SELECT temperatura FROM dane WHERE id_pom=795"
-        temp = str(execute_read_query(connection, select_temp)[0][0])
+        select_query = "SELECT temperature, AdditionalTemperature, Humidity, Date, Time FROM Measurements"
+        query = execute_read_query(connection, select_query)[-1]
+        print(query)
+
+        '''temp = str(execute_read_query(connection, select_temp)[0][0])
 
         select_waga = "SELECT masa FROM dane WHERE id_pom=795"
         waga = str(execute_read_query(connection, select_waga)[0][0])
@@ -48,7 +51,7 @@ def get_inf():
 
         connection.disconnect()
         return data, temp + '°C', waga + 'kg', humi + '%'
-    else:
+    else:'''
         temp='0'
         waga='0'
         humi='0'
