@@ -31,27 +31,27 @@ def get_inf():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT temperature, AdditionalTemperature, Humidity, Date, Time FROM Measurements"
+        select_query = "SELECT temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements"
         query = execute_read_query(connection, select_query)[-1]
-        print(query)
 
-        '''temp = str(execute_read_query(connection, select_temp)[0][0])
+        #temperatura wewnetrzna - temp1
+        temp1 = str(query[0])
 
-        select_waga = "SELECT masa FROM dane WHERE id_pom=795"
-        waga = str(execute_read_query(connection, select_waga)[0][0])
+        #temperatura zewnetrzna - temp2
+        temp2 = str(query[1])
 
-        select_humi = "SELECT wilgotnosc FROM dane WHERE id_pom=795"
-        humi = str(execute_read_query(connection, select_humi)[0][0])
+        waga = str(query[2])
+        humi = str(query[3])
+        kalendarz = str(query[4])
+        zegar = str(query[5])
 
-        select_data = "SELECT data FROM dane WHERE id_pom=795"
-        data = str(execute_read_query(connection, select_data)[0][0])
-        kalendarz = data[0:10]
-        zegar = data[11:19]
         data = kalendarz + "\n" + zegar
         temp= temp1 + '°C\n' +temp2 + '°C'
+
         connection.disconnect()
         return data, temp, waga + 'kg', humi + '%'
-    else:'''
+
+    else:
         temp='0°C\n0°C'
         waga='0'
         humi='0'
