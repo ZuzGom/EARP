@@ -46,7 +46,7 @@ def get_inf():
         zegar = str(query[5])
 
         data = kalendarz + "\n" + zegar
-        temp= temp1 + '°C\n' +temp2 + '°C'
+        temp= "zew: "+ temp1 + '°C\nwew: ' +temp2 + '°C'
 
         connection.disconnect()
         return data, temp, waga + 'kg', humi + '%'
