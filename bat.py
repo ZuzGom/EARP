@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from mysql.connector import connect, Error
 
+#Function which connect with database
 def polaczenie():
     try:
         connection = connect(
@@ -25,7 +26,7 @@ def execute_read_query(connection, query):
         return result
 
 
-#ważna funkcja służy do pobierania informacji o aktualnych właściwościach ula
+#Important function, which download live information about bees house
 def get_inf():
     connection = polaczenie()
 
@@ -35,13 +36,13 @@ def get_inf():
 
         connection.disconnect()
 
-        #temperatura wewnetrzna - temp1
+        #Temperature inside - temp1
         temp1 = str(query[0])
 
-        #temperatura zewnetrzna - temp2
+        #Temperature outside - temp2
         temp2 = str(query[1])
 
-        #Zuzi rozwiazanie wagi
+        #Zuzia solution
         waga = str(int(float(query[2]))/1000)
 
         humi = str(query[3])
@@ -62,14 +63,14 @@ def get_inf():
         return data, temp, waga + 'kg', humi + "%"
 
 
-#funkcja dla Zuzi, sprawdza czy sie updatuje
+#Function for Zuzia, check if the time is updatet
 def data():
     now = datetime.now()
     return str(now)
 
 
-#przyszlosciowa funkcja
-#zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
+#Future function
+#return 2D tables with data included now time since some date
 def get_all(dni):
     date = datetime.now()-timedelta(minutes=dni)
             #od tej daty
@@ -85,7 +86,7 @@ def get_all(dni):
     ]
     return tab
 
-#Funkcja zwraca 'tab[]' do wykresu z biezacego dnia
+#Function return 'tab[]' to TODAY graph
 def get_all_day():
     teraz = datetime.now()
     dzien = str(teraz.day)
@@ -109,7 +110,7 @@ def get_all_day():
     return tab
 
 
-#Funkcja, ktora zwraca 'tab[]' do wykresu godzine do tylu
+#Function return 'tab[]' to hour back graph
 def get_all_hour():
     teraz = datetime.now()
     minuta = str(teraz.minute)
@@ -135,7 +136,7 @@ def get_all_hour():
     return tab
 
 
-#Funkcja zwraca 'tab[]' do wykresu od miesiaca do tylu                               Te funkcje trzeba sprawdzic
+#Function return 'tab[]' to month back graph
 def get_all_month():
     teraz = datetime.now()
     dzien = str(teraz.day)
@@ -159,7 +160,7 @@ def get_all_month():
     return tab
 
 
-#Funkcja zwraca 'tab[]' do wykresu od poczatku roku
+#Function return 'tab[]' since begin of the year 
 def get_all_year():
     teraz = datetime.now()
     rok = str(teraz.year)
