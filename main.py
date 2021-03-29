@@ -56,18 +56,20 @@ def manag(scr):
     scr.add_widget(Sett(name="set"))
 
 
-def rysuj(ti):
-    dane = get_all(id, ti)
+def rysuj(func):
+    dane = func
     pltem1=[]
     pltem2=[]
     plwg=[]
     plhum=[]
+    
     for x in dane:
         pltem1.append(float(x[2]))
         pltem2.append(float(x[3]))
         plhum.append(float(x[4]))
         plwg.append(float(x[5]))
-    
+    print(plhum)
+    print(plwg)
     ax.patch.set_facecolor('#151515')
     #ax.patch.set_alpha(0.2)
     ax.tick_params(colors='white', which='both', labelsize='xx-large')
@@ -129,7 +131,17 @@ class Notif(Screen):
         self.ids.wykres.clear_widgets()
         ax.clear()
         
-        rysuj(time)
+        rysuj(get_all(time))
+        
+        
+        self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+    def dzien(self,text):
+        self.ids.dropdown.select(text)
+        
+        self.ids.wykres.clear_widgets()
+        ax.clear()
+        
+        rysuj(get_all_day())
         
         
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
@@ -141,7 +153,7 @@ try:
     fig.patch.set_facecolor('#202020')
     #fig.patch.set_alpha(0.3)
     ax = fig.add_subplot(111)
-    rysuj(100)
+    rysuj(get_all(100))
 except Exception as ex:
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title=err, message=err[50:], timeout=20)

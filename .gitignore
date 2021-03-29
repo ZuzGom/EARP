@@ -7,7 +7,7 @@
 /nowy
 /mysql
 /mysqlx
-buildozer.spec
+*.spec
 /__pycache__
 /notify_run
 /ol
