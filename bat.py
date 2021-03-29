@@ -109,7 +109,7 @@ def get_all_day():
     return tab
 
 
-#Funkcja, ktora zwraca 'tab[]' do wykresu godzine do tylu                           Te funkcje trzeba sprawdzic
+#Funkcja, ktora zwraca 'tab[]' do wykresu godzine do tylu
 def get_all_hour():
     teraz = datetime.now()
     minuta = str(teraz.minute)
