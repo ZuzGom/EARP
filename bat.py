@@ -70,7 +70,7 @@ def data():
 
 
 #Future function
-#return 2D tables with data included now time since some date
+#return 2D tables with data included from now to some date
 def get_all(dni):
     date = datetime.now()-timedelta(minutes=dni)
             #od tej daty
@@ -97,13 +97,13 @@ def get_all_day():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
 
         for x in query:
-            line = [(x[:3]),(x[3:6])] + list(x[6:])
+            line = [(x[:3]),(x[3:5])] + list(x[5:])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
 
@@ -123,13 +123,13 @@ def get_all_hour():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ")"
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ")"
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
 
         for x in query:
-            line = [(x[:3]), (x[3:6])] + list(x[6:])
+            line = [(x[:3]), (x[3:5])] + list(x[5:])
             line[-1] = int(float(line[-1])) / 1000
             tab.append(line)
 
@@ -147,13 +147,13 @@ def get_all_month():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ")"
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ")"
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
 
         for x in query:
-            line = [(x[:3]), (x[3:6])] + list(x[6:])
+            line = [(x[:3]), (x[3:5])] + list(x[5:])
             line[-1] = int(float(line[-1])) / 1000
             tab.append(line)
             
@@ -169,13 +169,13 @@ def get_all_year():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
 
         for x in query:
-            line = [(x[:3]), (x[3:6])] + list(x[6:])
+            line = [(x[:3]), (x[3:5])] + list(x[5:])
             line[-1] = int(float(line[-1])) / 1000
             tab.append(line)
 
