@@ -41,9 +41,7 @@ def get_inf():
         #temperatura zewnetrzna - temp2
         temp2 = str(query[1])
 
-        #obliczanie wag
-
-        #moje rozwiazanie
+        #Zuzi rozwiazanie wagi
         waga = str(int(float(query[2]))/1000)
 
         humi = str(query[3])
@@ -124,7 +122,7 @@ def get_all_hour():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok + " AND Month = " + miesiac + " AND Day = " + dzien + " AND (( Hour = " + godzina + " AND Minute <= " + minuta + ") OR (Hour = " + str(int(godzina)-1) + " AND Minute >= " + minuta + " ))"
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Hour = " + godzina + " AND Minute = " + minuta + " ) AND "
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
