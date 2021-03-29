@@ -64,7 +64,6 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
-get_inf()
 
 #funkcja dla Zuzi, sprawdza czy sie updatuje
 def data():
