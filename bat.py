@@ -74,12 +74,11 @@ def data():
 
 #przyszlosciowa funkcja
 #zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
-def get_all(time):
-    date = datetime.now()-timedelta(minutes=time)
-    #od tej daty ^ 
+def get_all(dni):
+    date = datetime.now()-timedelta(minutes=dni)
+            #od tej daty
 
-    #licza sie dla mnie trzy ostatnie indeksy
-    #data, godzina, temp_zew, temp_wew, wilgotnosc, waga
+    #data, godzina, temp_wew, temp_zew, wilgotnosc, waga
     tab = [
     ['77112020-01-17',' 18:48:09',' 2','4',' 54',' 0'],
     ['77212020-01-17',' 18:48:14',' 23','2',' 55',' 0'],
