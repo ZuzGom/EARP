@@ -20,7 +20,7 @@ def execute_read_query(connection, query):
         cursor.execute(query)
         result = cursor.fetchall()
         return result
-    except Error as e:
+    except Error:
         result = '0'
         return result
 
@@ -74,8 +74,7 @@ def data():
 
 #przyszlosciowa funkcja
 #zwraca listę dwuwymiarową z danymi od danej daty do obecnego czasu
-def get_all(id, time):
-   
+def get_all(time):
     date = datetime.now()-timedelta(minutes=time)
     #od tej daty ^ 
 
@@ -91,6 +90,7 @@ def get_all(id, time):
     ]
     return tab
 
+#Funkcja zwraca 'tab[]' do wykresu z biezacego dnia
 def get_all_day():
     teraz = datetime.now()
     dzien = str(teraz.day)
@@ -98,11 +98,10 @@ def get_all_day():
     rok = str(teraz.year)
 
     tab = []
-
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND YEAR = " + rok
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
@@ -114,6 +113,52 @@ def get_all_day():
 
     return tab
 
+
+#Funkcja zwraca 'tab[]' do wykresu od miesiaca do tylu                               Te funkcje trzeba sprawdzic
+def get_all_month():
+    teraz = datetime.now()
+    dzien = str(teraz.day)
+    miesiac = str(teraz.month)
+    miesiac_tyl= str(int(miesiac)-1)
+    rok = str(teraz.year)
+
+    tab = []
+    connection = polaczenie()
+
+    if(connection!=None):
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (( Day <= " + dzien + " AND Month = " + miesiac " ) AND ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + " )) AND Year = " + rok
+        query = execute_read_query(connection, select_query)
+
+        connection.disconnect()
+
+        for x in query:
+            line = [(x[:3]), (x[3:6])] + list(x[6:])
+            line[-1] = int(float(line[-1])) / 1000
+            tab.append(line)
+            
+    return tab
+
+
+#Funkcja zwraca 'tab[]' do wykresu od poczatku roku                                        Te funkcje trzeba sprawdzic
+def get_all_year():
+    teraz = datetime.now()
+    rok = str(teraz.year)
+
+    tab = []
+    connection = polaczenie()
+
+    if(connection!=None):
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok
+        query = execute_read_query(connection, select_query)
+
+        connection.disconnect()
+
+        for x in query:
+            line = [(x[:3]), (x[3:6])] + list(x[6:])
+            line[-1] = int(float(line[-1])) / 1000
+            tab.append(line)
+
+    return tab
 
 '''
 def get_ule(id):
