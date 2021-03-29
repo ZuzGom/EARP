@@ -126,7 +126,7 @@ def get_all_month():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (( Day <= " + dzien + " AND Month = " + miesiac " ) AND ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + " )) AND Year = " + rok
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (( Day <= " + dzien + " AND Month = " + miesiac + " ) AND ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + " )) AND Year = " + rok
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
@@ -159,6 +159,7 @@ def get_all_year():
             tab.append(line)
 
     return tab
+
 
 '''
 def get_ule(id):
