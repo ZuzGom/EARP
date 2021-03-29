@@ -14,7 +14,6 @@ def polaczenie():
         notification.notify(title=e, message=e[50:])
 
 
-
 def execute_read_query(connection, query):
     cursor = connection.cursor()
     try:
@@ -34,6 +33,8 @@ def get_inf():
         select_query = "SELECT temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements"
         query = execute_read_query(connection, select_query)[-1]
 
+        connection.disconnect()
+
         #temperatura wewnetrzna - temp1
         temp1 = str(query[0])
 
@@ -51,9 +52,8 @@ def get_inf():
         zegar = str(query[5])
 
         data = kalendarz + "\n" + zegar
-        temp= "zew: "+ temp1 + '°C\nwew: ' +temp2 + '°C'
+        temp= "zew: "+ temp1 + '°C\nwew: ' + temp2 + '°C'
 
-        connection.disconnect()
         return data, temp, waga + 'kg', humi + '%'
 
     else:
@@ -104,16 +104,17 @@ def get_all_day():
     if(connection!=None):
         select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND YEAR = " + rok
         query = execute_read_query(connection, select_query)
-        #print(query)
+
+        connection.disconnect()
+
         for x in query:
             line = [(x[:3]),(x[3:6])] + list(x[6:])
             
             tab.append(line)
 
-    connection.disconnect()
     return tab
 
-#print(get_all_day())
+
 '''
 def get_ule(id):
     
@@ -134,7 +135,7 @@ def push_err(txt):
     do tabeli alerty (którą trzeba stworzyć)
     
 
-                                                                                                        #to chcę na zaraz
+                                                                                                    #to chcę na zaraz
 def check_err(id):
     
     sprawdza ostatni stan stan ula dla jego id z tabeli alerty, 

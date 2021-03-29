@@ -21,6 +21,7 @@ except Exception as ex:
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title=err, message=err[50:], timeout=20)
 '''
+
 #threads=[]
 # Create both screens. Please note the root.manager.current: this is how
 # you can control the ScreenManager from kv. Each screen has by default a
@@ -29,7 +30,6 @@ except Exception as ex:
 # root = root()
 # root = Widget()
 
-    
 
 '''
 class Klasa(object):
@@ -47,6 +47,7 @@ class Klasa(object):
         self._a = value
     a = property(_get_a, _set_a)
 '''
+
 def manag(scr):
     # scr.add_widget(MenuScreen(name="menu"))
     scr.add_widget(Ule(name="ule"))
@@ -148,8 +149,6 @@ except Exception as ex:
 class Wykres(FigureCanvasKivyAgg):
     def __init__(self, **kwargs):
         super(Wykres, self).__init__(plt.gcf(), **kwargs)
-
-
 
 
 # sm = ScreenManager()
