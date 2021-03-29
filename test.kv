@@ -1,9 +1,21 @@
 #:kivy 1.0
 #:import ScreenManager kivy.uix.screenmanager.ScreenManager
 #:import idle nf.idle
-   
-<Button>
+#:import reg nf.reg
+<ButImage@ButtonBehavior+AsyncImage>
+<CoButton@Button>
     background_color: (60/255,60/255,60/255,0.5)
+<MenBut@Button>
+    color: 0,0,0,1
+    background_color: (60/255,60/255,60/255,0)
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+<Chud@Label>:
+    size_hint:1,1
 <CoLabel@Label>
     canvas.before:
         Color: 
@@ -13,6 +25,8 @@
             size: self.size
 <BazaGrid@GridLayout>
     cols: 4
+    #size_hint: 2,1
+    size_hint: 1,0.5 
     #orientation: "horizontal"
     canvas.before:
         Color: 
@@ -22,30 +36,34 @@
             size: self.size
     Image:
         source: "image/ul.png"
-        size_hint: 1, 1
-    Label:
+        #size_hint: 1, 0.25
+    Chud:
         text: "Waga"
-    Label:
+    Chud:
         text: "Temperatura"
-    Label:
+    Chud:
         text: "Wilgotność" 
 
 
 <Menu>
     FloatLayout:
+    
         #size: 500, 400
         #size_hint: 1, 1
         BoxLayout:
             canvas.before:
                 Color:
-                    rgba: (1,1,1,1)
+                    rgba:(30/255,30/255,30/255,0.5) 
                 Rectangle:
-                    #pos: self.pos
-                    #size: self.size
-                    texture: root.texture
-                    pos: 0, root.height-1.5*self.height
+                    pos: 0, root.height-1.3*self.height
                     size: root.width, 3*self.height
-
+            canvas:
+                Color:
+                    rgba: (.91,.75,.15,1)
+                Rectangle:
+                    pos: 0, root.height-1.2*self.height
+                    size: root.width, 2*self.height
+                    
             
             #padding: 60
             spacing: self.width/100
@@ -53,25 +71,37 @@
             pos: 0, root.height - self.height - 10
             #size: 500, 400 
             size_hint_y: None
-            Button:
+            MenBut:
                 text: "Ule"                
                 on_press: root.now("ule")
                 size_hint_y: None
-            Button:
+            MenBut:
                 text: "Alerty"                
                 on_press: root.now('alert')
                 size_hint_y: None
                 #height: '48dp'
-            Button:
+            MenBut:
                 text: "Archiwum"
                 on_press: root.now('arch')
                 #on_press: Notif.wyk()
                 size_hint_y: None
-                #height: '48dp'
-            Button:
-                text: "Ustawienia"                
+                #height: '48dp'                 
+            ButImage:
+                id: but
+                # take 50% size of the FloatLayout
+                size_hint: .5, None
+                # Make Button change it's opacity when pressed for visual indication
+                opacity: 1 if self.state == 'normal' else .2
+                source: 'image/dot.png'
                 on_press: root.now('set')
-                size_hint_y: None
+                canvas.before:
+                    Color:
+                        rgba: .2, .2, .2, 1
+                    Line:
+                        width: 2
+                        rectangle: self.x, self.y, self.width, self.height
+                
+
                 
 
         
@@ -91,23 +121,29 @@
             size: root.width-20, root.height - 100
             size_hint: None, None
             spacing: 5
-            Button:
-                text: "Odśwież"
-                on_press: root.up()
-                size_hint: 1,0.5 
+            
             BazaGrid:
-                Label:
+                Chud:
                     id: dat
                     text: root.data
-                Label:
+                Chud:
                     id: wei
                     text: root.waga 
-                Label:
+                Chud:
                     id: tem
                     text: root.temp 
-                Label:
+                Chud:
                     id:hum
                     text: root.humi 
+            ButImage:
+                id: but
+                # take 50% size of the FloatLayout
+                size_hint: 1,.5 
+                # Make Button change it's opacity when pressed for visual indication
+                opacity: 1 if self.state == 'normal' else .2
+                source: 'image/refr.png'
+                on_press: root.up()
+                #size_hint: 1,0.25 
             Label:
                 text: ""               
             
@@ -130,7 +166,7 @@
         spacing: 10
         CoLabel:
             text: "Wszystkie ule są w porządku"
-        Button:
+        CoButton:
             id: tim
             text: root.czas
             on_press: root.up()
@@ -139,7 +175,7 @@
             text:""
         Label:
             text:""
-        Button:
+        CoButton:
             text: "Sprawdź"
             background_color: (60/255,60/255,60/255,0.5)
             on_press: idle()
@@ -160,23 +196,23 @@
             
             on_select: btn.text = '{}'.format(args[1])
 
-            Button:
+            CoButton:
                 text: '10min'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.updt(self.text,10)
 
-            Button:
+            CoButton:
                 text: '30min'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.updt(self.text,30)
-            Button:
+            CoButton:
                 text: '1h'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.updt(self.text,60)
-            Button:
+            CoButton:
                 text: '1d'
                 size_hint_y: None
                 height: '48dp'
@@ -192,7 +228,7 @@
         size_hint: 1, 0.9
         padding: 60
         spacing: 10
-        Button:
+        CoButton:
             id: btn
             text: 'Okres czasu'
             on_release: dropdown.open(self)
@@ -240,12 +276,15 @@
             orientation: "horizontal"
             CoLabel:
                 text:"Powiadomienia:"
-            Button:
+            CoButton:
                 text: "Zarejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
-            Button:
+            CoButton:
                 text: "Wyrejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
+                on_press: reg()
+            
+                
         BoxLayout:
             orientation: "horizontal"
             CoLabel:
