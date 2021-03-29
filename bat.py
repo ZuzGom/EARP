@@ -107,7 +107,7 @@ def get_all_day():
 
         tab.append(query)
 
-    connection.close()
+    connection.disconnect()
     return tab
 
 
