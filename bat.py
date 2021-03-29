@@ -122,7 +122,7 @@ def get_all_hour():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Hour = " + godzina + " AND Minute = " + minuta + " ) AND "
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ")"
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
