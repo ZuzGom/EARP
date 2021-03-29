@@ -93,7 +93,22 @@ def get_all(id, time):
 
 def get_all_day():
     teraz = datetime.now()
-    dzien = teraz.day
+    dzien = str(teraz.day)
+    miesiac = str(teraz.month)
+    rok = str(teraz.year)
+
+    tab = []
+
+    connection = polaczenie()
+
+    if(connection!=None):
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND YEAR = " + rok
+        query = execute_read_query(connection, select_query)
+
+        tab.append(query)
+
+    connection.close()
+    return tab
 
 
 '''
