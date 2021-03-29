@@ -40,7 +40,11 @@ def get_inf():
         #temperatura zewnetrzna - temp2
         temp2 = str(query[1])
 
-        waga = str(query[2])
+        waga_all_string = str(query[2])
+        waga1=waga_all_string[0:2]
+        waga2=waga_all_string[2:4]
+        waga = waga1 + '.' + waga2
+
         humi = str(query[3])
         kalendarz = str(query[4])
         zegar = str(query[5])
@@ -52,13 +56,14 @@ def get_inf():
         return data, temp, waga + 'kg', humi + '%'
 
     else:
-        temp='0°C\n0°C'
+        temp='zew: 0°C\nwew: 0°C'
         waga='0'
         humi='0'
         data = "00-00-0000 \n 00:00:00"
 
         return data, temp, waga + 'kg', humi + "%"
 
+get_inf()
 
 #funkcja dla Zuzi, sprawdza czy sie updatuje
 def data():
@@ -83,7 +88,6 @@ def get_all(id, time):
     return tab
 
 '''
-
 def get_ule(id):
     
     ta przyszłościowa funkcja służy do pobierania informacji z tabli 'user' z indeksu ule
