@@ -112,12 +112,37 @@ def get_all_day():
     return tab
 
 
+#Funkcja, ktora zwraca 'tab[]' do wykresu godzine do tylu                           Te funkcje trzeba sprawdzic
+def get_all_hour():
+    teraz = datetime.now()
+    minuta = str(teraz.minute)
+    godzina = str(teraz.hour)
+    dzien = str(teraz.day)
+    miesiac = str(teraz.month)
+    rok = str(teraz.year)
+
+    tab = []
+    connection = polaczenie()
+
+    if(connection!=None):
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok + " AND Month = " + miesiac + " AND Day = " + dzien + " AND (( Hour = " + godzina + " AND Minute <= " + minuta + ") OR (Hour = " + str(int(godzina)-1) + " AND Minute >= " + minuta + " ))"
+        query = execute_read_query(connection, select_query)
+
+        connection.disconnect()
+
+        for x in query:
+            line = [(x[:3]), (x[3:6])] + list(x[6:])
+            line[-1] = int(float(line[-1])) / 1000
+            tab.append(line)
+
+    return tab
+
+
 #Funkcja zwraca 'tab[]' do wykresu od miesiaca do tylu                               Te funkcje trzeba sprawdzic
 def get_all_month():
     teraz = datetime.now()
     dzien = str(teraz.day)
     miesiac = str(teraz.month)
-    miesiac_tyl= str(int(miesiac)-1)
     rok = str(teraz.year)
 
     tab = []
