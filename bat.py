@@ -146,7 +146,7 @@ def get_all_month():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok
+        select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ")"
         query = execute_read_query(connection, select_query)
 
         connection.disconnect()
@@ -159,7 +159,7 @@ def get_all_month():
     return tab
 
 
-#Funkcja zwraca 'tab[]' do wykresu od poczatku roku                                        Te funkcje trzeba sprawdzic
+#Funkcja zwraca 'tab[]' do wykresu od poczatku roku
 def get_all_year():
     teraz = datetime.now()
     rok = str(teraz.year)
