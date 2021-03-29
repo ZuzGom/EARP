@@ -109,7 +109,7 @@ def get_all_day():
 
         for x in query:
             line = [(x[:3]),(x[3:6])] + list(x[6:])
-            
+            line[-1]=int(float(line[-1]))/1000
             tab.append(line)
 
     return tab
