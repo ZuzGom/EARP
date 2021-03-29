@@ -104,13 +104,17 @@ def get_all_day():
     if(connection!=None):
         select_query = "SELECT Day, Month, Year, Hour, Minute, Second, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND YEAR = " + rok
         query = execute_read_query(connection, select_query)
-
-        tab.append(query)
+        #print(query)
+        for x in query:
+            line = [(x[:3]),(x[3:6])]
+            for y in x[6:]:
+                line.append(y)
+            tab.append(line)
 
     connection.disconnect()
     return tab
 
-
+#print(get_all_day())
 '''
 def get_ule(id):
     
