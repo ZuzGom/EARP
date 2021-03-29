@@ -47,6 +47,10 @@ def get_inf():
         waga2=waga_all_string[1:3]
         waga = waga1 + '.' + waga2
 
+
+        #moje rozwiazanie
+        #waga = str(int(float(query[2]))/1000)
+
         humi = str(query[3])
         kalendarz = str(query[4])
         zegar = str(query[5])
