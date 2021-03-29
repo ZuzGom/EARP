@@ -9,6 +9,7 @@
 /mysqlx
 buildozer.spec
 /__pycache__
+/notify_run
 /ol
 /kivy
 old_main.py

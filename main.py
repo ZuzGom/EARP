@@ -57,25 +57,28 @@ def manag(scr):
 
 def rysuj(ti):
     dane = get_all(id, ti)
-    pltem=[]
+    pltem1=[]
+    pltem2=[]
     plwg=[]
     plhum=[]
     for x in dane:
-        pltem.append(float(x[2]))
-        plhum.append(float(x[3]))
-        plwg.append(float(x[4]))
+        pltem1.append(float(x[2]))
+        pltem2.append(float(x[3]))
+        plhum.append(float(x[4]))
+        plwg.append(float(x[5]))
     
-    ax.patch.set_facecolor('black')
-    ax.patch.set_alpha(0.2)
-    ax.tick_params(colors='white', which='both')
-    plt.plot(pltem, label='Temperatura')
+    ax.patch.set_facecolor('#151515')
+    #ax.patch.set_alpha(0.2)
+    ax.tick_params(colors='white', which='both', labelsize='xx-large')
+    plt.plot(pltem1, label='Temp.Zew')
+    plt.plot(pltem2, label='Temp.Wew')
     plt.plot(plhum, label='Wilgotność')
     plt.plot(plwg, label='Waga')
     #ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
     #      fancybox=True, shadow=True, ncol=3)
 
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
-           ncol=3, mode="expand", borderaxespad=0,fontsize='xx-large')
+           ncol=4, mode="expand", borderaxespad=0,fontsize='xx-large')
 
 global MenuScreen, Ule, Alert, sm, czas
 
@@ -97,7 +100,7 @@ class Sett(Screen):
         if value is True:
             Window.clearcolor = (40 / 255, 40 / 255, 40 / 255, 1)
         else:
-            Window.clearcolor = (250 / 255, 255 / 255, 205 / 255, 1)
+            Window.clearcolor = (255 / 255, 255 / 255, 235 / 255, 1)
     stts="Nieaktywne"
 
 
@@ -134,8 +137,8 @@ class Notif(Screen):
 try:
     #ule = [[x] for x in get_ule('001')]
     fig = plt.figure()
-    fig.patch.set_facecolor('black')
-    fig.patch.set_alpha(0.2)
+    fig.patch.set_facecolor('#202020')
+    #fig.patch.set_alpha(0.3)
     ax = fig.add_subplot(111)
     rysuj(100)
 except Exception as ex:
