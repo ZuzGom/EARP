@@ -40,6 +40,7 @@ def get_inf():
         #temperatura zewnetrzna - temp2
         temp2 = str(query[1])
 
+        #obliczanie wag
         waga_all_string = str(query[2])
         waga1=waga_all_string[0:2]
         waga2=waga_all_string[2:4]
