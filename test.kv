@@ -1,5 +1,4 @@
 #:kivy 1.0
-#:import ScreenManager kivy.uix.screenmanager.ScreenManager
 #:import idle nf.idle
 #:import reg nf.reg
 <ButImage@ButtonBehavior+AsyncImage>
@@ -216,7 +215,7 @@
                 text: '1d'
                 size_hint_y: None
                 height: '48dp'
-                on_release: root.updt(self.text,1440)
+                on_release: root.dzien(self.text)
     BoxLayout:
 
         id: box
@@ -279,10 +278,11 @@
             CoButton:
                 text: "Zarejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
+                on_press: reg()
             CoButton:
                 text: "Wyrejestruj"
                 background_color: (60/255,60/255,60/255,0.5)
-                on_press: reg()
+                
             
                 
         BoxLayout:
