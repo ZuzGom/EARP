@@ -106,9 +106,8 @@ def get_all_day():
         query = execute_read_query(connection, select_query)
         #print(query)
         for x in query:
-            line = [(x[:3]),(x[3:6])]
-            for y in x[6:]:
-                line.append(y)
+            line = [(x[:3]),(x[3:6])] + list(x[6:])
+            
             tab.append(line)
 
     connection.disconnect()
