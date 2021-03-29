@@ -1,6 +1,6 @@
 from plyer import notification
 import webbrowser
-
+#http://13c058b20a8b.ngrok.io/c/jF3GCI2kVcyQzv0v
 def idle():
     b, t = 0, "good"
     if b:
