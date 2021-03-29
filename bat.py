@@ -42,8 +42,8 @@ def get_inf():
 
         #obliczanie wag
         waga_all_string = str(query[2])
-        waga1=waga_all_string[0:2]
-        waga2=waga_all_string[2:4]
+        waga1=waga_all_string[0]
+        waga2=waga_all_string[1:3]
         waga = waga1 + '.' + waga2
 
         humi = str(query[3])
@@ -80,13 +80,21 @@ def get_all(id, time):
     #od tej daty ^ 
 
     #licza sie dla mnie trzy ostatnie indeksy
-    tab = [['77112020-01-17',' 18:48:09',' 2','4',' 54',' 0'],
+    #data, godzina, temp_zew, temp_wew, wilgotnosc, waga
+    tab = [
+    ['77112020-01-17',' 18:48:09',' 2','4',' 54',' 0'],
     ['77212020-01-17',' 18:48:14',' 23','2',' 55',' 0'],
     ['77312020-01-17',' 18:48:19',' 23','8',' 59',' 0'],
     ['77412020-01-17',' 18:48:24',' 23','8',' 56',' 0'],
     ['77512020-01-17',' 18:48:29',' 23','9',' 54',' 0'],
-    ['77612020-01-17',' 18:48:34',' 23','2',' 54',' 0']]
+    ['77612020-01-17',' 18:48:34',' 23','2',' 54',' 0']
+    ]
     return tab
+
+def get_all_day():
+    teraz = datetime.now()
+    dzien = teraz.day
+
 
 '''
 def get_ule(id):
