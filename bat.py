@@ -26,6 +26,17 @@ def execute_read_query(connection, query):
         return result
 
 
+#Function which gives data to database
+def execute_query(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        connection.commit()
+        print("Query executed successfully")
+    except Error as e:
+        print("The error " + str(e) + " occurred")
+
+
 #Important function, which download live information about bees house
 def get_inf():
     connection = polaczenie()
@@ -89,6 +100,7 @@ def get_all(dni):
     ['77612020-01-17',' 18:48:34',' 23','22',' 54',' 0']
     ]
     return tab
+
 
 #Function return 'tab[]' to TODAY graph
 def get_all_day():
@@ -188,20 +200,26 @@ def get_all_year():
 
 #te dwie funkcje do tabeli Alerty
 #ja poszukam jeszcze 
-def push_alrt(id, error, tekst):
+#Nie dziala jeszcze
+def push_alert(data, id, error, tekst):
     
-    '''
-    funkcja do przesyłania danych
-    '''
+    connection = polaczenie()
+    if(connection!=None):
+        inserting_error = "INSERT INTO Alerty ( 'data', 'id', 'error', 'tekst' ) VALUES ( '" + str(data) + "', '" + str(id) + "', '" + str(error) + "', '" + str(tekst) + "')"
+        execute_query(connection, inserting_error)
+    
+    connection.disconnect()
+    
 
+#Nie robilem nic przy niej
 def get_err(id):
-    
     #zwraca ostatnie 10 linii z tabeli Alerty
     
     tab = [['2020-01-17; 18:48:09','1','1' ,'Ziąb'], ['2020-01-17; 18:48:09','1','2' , 'Miód'], 
     ['2020-01-17; 18:48:09','8','1' , 'Nieznany błąd'], 
     ['2020-01-17; 18:48:09','1','1' , 'Ziąb'], ['2020-01-17; 18:48:09','1','3' , 'Ucieczka']]
     return tab
+
 
 '''
 def get_ule(id):
