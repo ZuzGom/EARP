@@ -188,13 +188,10 @@ def get_all_year():
 
 #te dwie funkcje do tabeli Alerty
 #ja poszukam jeszcze 
-def push_err(id, error, tekst):
+def push_alrt(id, error, tekst):
     
     '''
-    ta funkcja służy do poinformowania nas o errorach
-    pomyślałam, że skoro ule mówią nam, że się źle czują to apka również może
-    pushniesz wiadomość txt z id_ula 'U' (jak user) i z kodem do ustalenia
-    do tabeli alerty (którą trzeba stworzyć)
+    funkcja do przesyłania danych
     '''
 
 def get_err(id):
