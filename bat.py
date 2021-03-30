@@ -211,7 +211,7 @@ def push_alert(id, error, tresc):
     connection = polaczenie()
     
     if(connection!=None):
-        inserting_error = "INSERT INTO Alerty ( data, id, error, tekst ) VALUES ( " + rok + '-' + miesiac + '-' + dzien + " " + godzina + ':' + minuta + ':' + sekunda +  "\' , " + str(id) + ' , ' + str(error) + ' , ' + tresc + ' )'
+        inserting_error = "INSERT INTO Alerty ( data, id, error, tekst ) VALUES ( \'" + rok + '-' + miesiac + '-' + dzien + " " + godzina + ':' + minuta + ':' + sekunda +  "\' , " + str(id) + ' , ' + str(error) + ' , ' + tresc + ' )'
         execute_query(connection, inserting_error)
     
     connection.disconnect()
