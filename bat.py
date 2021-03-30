@@ -12,7 +12,7 @@ def polaczenie():
         )
         return connection
     except Error as e:
-        notification.notify(title=e, message=e[50:])
+        return notification.notify(title=e, message=e[50:])
 
 
 def execute_read_query(connection, query):
