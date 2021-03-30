@@ -22,7 +22,7 @@ def execute_read_query(connection, query):
         result = cursor.fetchall()
         return result
     except Error:
-        result = '0'
+        result = None
         return result
 
 
@@ -45,7 +45,7 @@ def get_inf():
         select_query = "SELECT temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements"
         query = execute_read_query(connection, select_query)[-1]
 
-        connection.disconnect()
+        connection.close()
 
         #Temperature inside - temp1
         temp1 = str(query[0])
@@ -82,6 +82,7 @@ def data():
 
 #ale batiś to jest projekt dla polskich pszczelarzy
 #chyba że lubisz sobie utrudniać ;)
+#Kiedyś do CV będzie można sobie wrzucić i lepiej będzie wyglądały komentarze po angielsku
 
 
 #Future function
@@ -116,7 +117,7 @@ def get_all_day():
         select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok
         query = execute_read_query(connection, select_query)
 
-        connection.disconnect()
+        connection.close()
 
         for x in query:
             line = [(x[:3]),(x[3:5])] + list(x[5:])
@@ -142,7 +143,7 @@ def get_all_hour():
         select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ")"
         query = execute_read_query(connection, select_query)
 
-        connection.disconnect()
+        connection.close()
 
         for x in query:
             line = [(x[:3]), (x[3:5])] + list(x[5:])
@@ -166,7 +167,7 @@ def get_all_month():
         select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ")"
         query = execute_read_query(connection, select_query)
 
-        connection.disconnect()
+        connection.close()
 
         for x in query:
             line = [(x[:3]), (x[3:5])] + list(x[5:])
@@ -188,7 +189,7 @@ def get_all_year():
         select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok
         query = execute_read_query(connection, select_query)
 
-        connection.disconnect()
+        connection.close()
 
         for x in query:
             line = [(x[:3]), (x[3:5])] + list(x[5:])
@@ -198,12 +199,14 @@ def get_all_year():
     return tab
 
 
-#Nie dziala jeszcze
+#Function works
 def push_alert(id, error, tresc):
     teraz = datetime.now()
+    
     sekunda = str(teraz.second)
     minuta = str(teraz.minute)
     godzina = str(teraz.hour)
+    
     dzien = str(teraz.day)
     miesiac = str(teraz.month)
     rok = str(teraz.year)
@@ -211,10 +214,11 @@ def push_alert(id, error, tresc):
     connection = polaczenie()
     
     if(connection!=None):
-        inserting_error = "INSERT INTO Alerty ( data, id, error, tekst ) VALUES ( \'" + rok + '-' + miesiac + '-' + dzien + " " + godzina + ':' + minuta + ':' + sekunda +  "\' , " + str(id) + ' , ' + str(error) + ' , ' + tresc + ' )'
+        inserting_error = "INSERT INTO Alerty ( data, id, error, tekst ) VALUES ( \'" + rok + '-' + miesiac + '-' + dzien + " " + godzina + ':' + minuta + ':' + sekunda +  "\', " + str(id) + ", " + str(error) + ", \"" + tresc + "\" )"
+        print(inserting_error)
         execute_query(connection, inserting_error)
     
-    connection.disconnect()
+    connection.close()
     
 push_alert(15, 6, "testy")
 
