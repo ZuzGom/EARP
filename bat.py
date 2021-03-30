@@ -32,9 +32,9 @@ def execute_query(connection, query):
     try:
         cursor.execute(query)
         connection.commit()
-        print("Query executed successfully")
+        #print("Query executed successfully")
     except Error as e:
-        print("The error " + str(e) + " occurred")
+        #print("The error " + str(e) + " occurred")
 
 
 #Important function, which download live information about bees house
@@ -201,26 +201,16 @@ def get_all_year():
 
 #Function works
 def push_alert(id, error, tresc):
-    teraz = datetime.now()
-    
-    sekunda = str(teraz.second)
-    minuta = str(teraz.minute)
-    godzina = str(teraz.hour)
-    
-    dzien = str(teraz.day)
-    miesiac = str(teraz.month)
-    rok = str(teraz.year)
-    
+
     connection = polaczenie()
     
     if(connection!=None):
-        inserting_error = "INSERT INTO Alerty ( data, id, error, tekst ) VALUES ( \'" + rok + '-' + miesiac + '-' + dzien + " " + godzina + ':' + minuta + ':' + sekunda +  "\', " + str(id) + ", " + str(error) + ", \"" + tresc + "\" )"
-        print(inserting_error)
+        inserting_error = "INSERT INTO Alerty ( id, error, tekst ) VALUES ( " + str(id) + ", " + str(error) + ", \"" + tresc + "\" )"
         execute_query(connection, inserting_error)
     
     connection.close()
     
-push_alert(15, 6, "testy")
+push_alert(15, 6, "Test godziny")
 
 #Nie robilem nic przy niej
 def get_err():
