@@ -202,7 +202,7 @@ def get_all_year():
 #ja poszukam jeszcze 
 #Nie dziala jeszcze
 def push_alert(data, id, error, tekst):
-    
+    #bez daty kuba, data się automatycznie wpisuje
     connection = polaczenie()
     if(connection!=None):
         inserting_error = "INSERT INTO Alerty ( 'data', 'id', 'error', 'tekst' ) VALUES ( '" + str(data) + "', '" + str(id) + "', '" + str(error) + "', '" + str(tekst) + "')"
@@ -212,8 +212,8 @@ def push_alert(data, id, error, tekst):
     
 
 #Nie robilem nic przy niej
-def get_err(id):
-    #zwraca ostatnie 10 linii z tabeli Alerty
+def get_err():
+    #zwraca ostatnie 5 linii z tabeli Alerty
     
     tab = [['2020-01-17; 18:48:09','1','1' ,'Ziąb'], ['2020-01-17; 18:48:09','1','2' , 'Miód'], 
     ['2020-01-17; 18:48:09','8','1' , 'Nieznany błąd'], 
