@@ -12,7 +12,7 @@ def polaczenie():
         )
         return connection
     except Error as e:
-        notification.notify(title=e, message=e[50:])
+        return notification.notify(title=e, message=e[50:])
 
 
 def execute_read_query(connection, query):
@@ -198,18 +198,25 @@ def get_all_year():
     return tab
 
 
-#te dwie funkcje do tabeli Alerty
-#ja poszukam jeszcze 
 #Nie dziala jeszcze
-def push_alert(data, id, error, tekst):
-    #bez daty kuba, data się automatycznie wpisuje
+def push_alert(id, error, tresc):
+    teraz = datetime.now()
+    sekunda = str(teraz.second)
+    minuta = str(teraz.minute)
+    godzina = str(teraz.hour)
+    dzien = str(teraz.day)
+    miesiac = str(teraz.month)
+    rok = str(teraz.year)
+    
     connection = polaczenie()
+    
     if(connection!=None):
-        inserting_error = "INSERT INTO Alerty ( 'data', 'id', 'error', 'tekst' ) VALUES ( '" + str(data) + "', '" + str(id) + "', '" + str(error) + "', '" + str(tekst) + "')"
+        inserting_error = "INSERT INTO Alerty ( data, id, error, tekst ) VALUES ( \'" + rok + '-' + miesiac + '-' + dzien + " " + godzina + ':' + minuta + ':' + sekunda +  "\' , " + str(id) + ' , ' + str(error) + ' , ' + tresc + ' )'
         execute_query(connection, inserting_error)
     
     connection.disconnect()
     
+push_alert(15, 6, "testy")
 
 #Nie robilem nic przy niej
 def get_err():
@@ -230,11 +237,5 @@ def get_ule(id):
     
     ule = [1,2]
     return ule
-
-
-
-
-
-
 
 '''
