@@ -201,7 +201,6 @@ def get_all_year():
 
 #Function works
 def push_alert(id, error, tresc):
-
     connection = polaczenie()
     
     if(connection!=None):
@@ -210,15 +209,22 @@ def push_alert(id, error, tresc):
     
     connection.close()
     
-push_alert(15, 6, "Test godziny")
 
-#Nie robilem nic przy niej
+#Function return 'tab[]' with last 5 records from table - Alerty
 def get_err():
-    #zwraca ostatnie 5 linii z tabeli Alerty
+    connection = polaczenie()
+    tab = []
     
-    tab = [['2020-01-17; 18:48:09','1','1' ,'Ziąb'], ['2020-01-17; 18:48:09','1','2' , 'Miód'], 
-    ['2020-01-17; 18:48:09','8','1' , 'Nieznany błąd'], 
-    ['2020-01-17; 18:48:09','1','1' , 'Ziąb'], ['2020-01-17; 18:48:09','1','3' , 'Ucieczka']]
+    if(connection!=None):
+        select_query = "SELECT * FROM Alerty WHERE id>=0 ORDER BY data DESC LIMIT 5"
+        query = execute_read_query(connection, select_query)
+
+        connection.close()
+
+        for x in query:
+            line = x
+            tab.append(line)
+    
     return tab
 
 
