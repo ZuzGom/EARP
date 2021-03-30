@@ -10,4 +10,5 @@ def idle():
         notification.notify(title='Twój ul jest bezpiczny!', 
         message='poprzez Elektorniczny Asystent Rodziny Pszczelej')
 def reg():
-    webbrowser.open('https://notify.run/c/mO3yfQmLdbxvMoIj')
+    #webbrowser.open('https://notify.run/c/mO3yfQmLdbxvMoIj')
+    webbrowser.open('http://13c058b20a8b.ngrok.io/c/jF3GCI2kVcyQzv0v')

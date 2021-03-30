@@ -1,9 +1,12 @@
 #:kivy 1.0
 #:import idle nf.idle
 #:import reg nf.reg
+#:import Factory kivy.factory.Factory
 <ButImage@ButtonBehavior+AsyncImage>
 <CoButton@Button>
     background_color: (60/255,60/255,60/255,0.5)
+
+
 <MenBut@Button>
     color: 0,0,0,1
     background_color: (60/255,60/255,60/255,0)
@@ -196,26 +199,26 @@
             on_select: btn.text = '{}'.format(args[1])
 
             CoButton:
-                text: '10min'
-                size_hint_y: None
-                height: '48dp'
-                on_release: root.updt(self.text,10)
-
-            CoButton:
-                text: '30min'
-                size_hint_y: None
-                height: '48dp'
-                on_release: root.updt(self.text,30)
-            CoButton:
                 text: '1h'
                 size_hint_y: None
                 height: '48dp'
-                on_release: root.updt(self.text,60)
+                on_release: root.godzina(self.text)
+
             CoButton:
                 text: '1d'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.dzien(self.text)
+            CoButton:
+                text: '1m'
+                size_hint_y: None
+                height: '48dp'
+                on_release: root.miesiac(self.text)
+            CoButton:
+                text: '1y'
+                size_hint_y: None
+                height: '48dp'
+                on_release: root.rok(self.text)
     BoxLayout:
 
         id: box
@@ -242,7 +245,47 @@
             source: "image/psz.png"
             size_hint: 1, 0.5
             
-    Menu:    
+    Menu:  
+
+<Witamy@Popup>:
+    auto_dismiss: False
+    title: "Pomoc już prawie możliwa"
+    BoxLayout:
+        orientation: 'vertical'
+        CoLabel:
+            text: 'Witamy w Elektronicznym Asystencie Rodziny Pszczelej!\nAby móc otrzymywać powiadomienia wymagane jest potwierdzenie subskrypcji kanału.\nTo jeden przycisk na stronie internetowej, zaraz pod historią Twoich powiadomień'
+            text_size: self.width, None   
+            font_size: 30     
+        BoxLayout:
+            size_hint: 1,.25
+            orientation: 'horizontal'
+            Button:
+                text: 'Zabierz mnie na stronę'
+                on_release: root.dismiss()
+                on_press: reg()
+            Button:
+                text: 'Zostawmy to na później'
+                on_release: root.dismiss()
+<Bye@Popup>:
+    auto_dismiss: False
+    title: "Instrukcja rezygnacji z powiadomień"
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source:'image/kot.jpg'
+        BoxLayout:
+            size_hint:1,.25
+            orientation: 'horizontal'
+            Button:
+                text: 'Jasne'
+                on_release: root.dismiss()
+                on_press: reg()
+            Button:
+                text: 'Potrzebuję pomocy'
+                on_release: root.dismiss()
+    
+        
+
 <Sett>:
     BoxLayout:
 
@@ -277,11 +320,11 @@
                 text:"Powiadomienia:"
             CoButton:
                 text: "Zarejestruj"
-                background_color: (60/255,60/255,60/255,0.5)
-                on_press: reg()
+                on_release: Factory.Witamy().open()
+                
             CoButton:
                 text: "Wyrejestruj"
-                background_color: (60/255,60/255,60/255,0.5)
+                on_release: Factory.Bye().open()
                 
             
                 

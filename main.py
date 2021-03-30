@@ -62,14 +62,14 @@ def rysuj(func):
     pltem2=[]
     plwg=[]
     plhum=[]
-    
+    #print(dane)
     for x in dane:
         pltem1.append(float(x[2]))
         pltem2.append(float(x[3]))
         plhum.append(float(x[4]))
         plwg.append(float(x[5]))
-    print(plhum)
-    print(plwg)
+    #print(plhum)
+    #print(plwg)
     ax.patch.set_facecolor('#151515')
     #ax.patch.set_alpha(0.2)
     ax.tick_params(colors='white', which='both', labelsize='xx-large')
@@ -135,6 +135,16 @@ class Notif(Screen):
         
         
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+    def godzina(self,text):
+        self.ids.dropdown.select(text)
+        
+        self.ids.wykres.clear_widgets()
+        ax.clear()
+        
+        rysuj(get_all_hour())
+        
+        self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+    
     def dzien(self,text):
         self.ids.dropdown.select(text)
         
@@ -143,6 +153,23 @@ class Notif(Screen):
         
         rysuj(get_all_day())
         
+        self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+    def miesiac(self,text):
+        self.ids.dropdown.select(text)
+        
+        self.ids.wykres.clear_widgets()
+        ax.clear()
+        
+        rysuj(get_all_month())
+        
+        self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+    def rok(self,text):
+        self.ids.dropdown.select(text)
+        
+        self.ids.wykres.clear_widgets()
+        ax.clear()
+        
+        rysuj(get_all_year())
         
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 

@@ -69,6 +69,10 @@ def data():
     return str(now)
 
 
+#ale batiś to jest projekt dla polskich pszczelarzy
+#chyba że lubisz sobie utrudniać ;)
+
+
 #Future function
 #return 2D tables with data included from now to some date
 def get_all(dni):
@@ -77,12 +81,12 @@ def get_all(dni):
 
     #data, godzina, temp_wew, temp_zew, wilgotnosc, waga
     tab = [
-    ['77112020-01-17',' 18:48:09',' 2','4',' 54',' 0'],
-    ['77212020-01-17',' 18:48:14',' 23','2',' 55',' 0'],
-    ['77312020-01-17',' 18:48:19',' 23','8',' 59',' 0'],
-    ['77412020-01-17',' 18:48:24',' 23','8',' 56',' 0'],
-    ['77512020-01-17',' 18:48:29',' 23','9',' 54',' 0'],
-    ['77612020-01-17',' 18:48:34',' 23','2',' 54',' 0']
+    ['77112020-01-17',' 18:48:09',' 22','24',' 54',' 0'],
+    ['77212020-01-17',' 18:48:14',' 23','22',' 55',' 0'],
+    ['77312020-01-17',' 18:48:19',' 23','28',' 59',' 0'],
+    ['77412020-01-17',' 18:48:24',' 23','28',' 56',' 0'],
+    ['77512020-01-17',' 18:48:29',' 23','29',' 54',' 0'],
+    ['77612020-01-17',' 18:48:34',' 23','22',' 54',' 0']
     ]
     return tab
 
@@ -182,6 +186,26 @@ def get_all_year():
     return tab
 
 
+#te dwie funkcje do tabeli Alerty
+#ja poszukam jeszcze 
+def push_err(id, error, tekst):
+    
+    '''
+    ta funkcja służy do poinformowania nas o errorach
+    pomyślałam, że skoro ule mówią nam, że się źle czują to apka również może
+    pushniesz wiadomość txt z id_ula 'U' (jak user) i z kodem do ustalenia
+    do tabeli alerty (którą trzeba stworzyć)
+    '''
+
+def get_err(id):
+    
+    #zwraca ostatnie 10 linii z tabeli Alerty
+    
+    tab = [['2020-01-17; 18:48:09','1','1' ,'Ziąb'], ['2020-01-17; 18:48:09','1','2' , 'Miód'], 
+    ['2020-01-17; 18:48:09','8','1' , 'Nieznany błąd'], 
+    ['2020-01-17; 18:48:09','1','1' , 'Ziąb'], ['2020-01-17; 18:48:09','1','3' , 'Ucieczka']]
+    return tab
+
 '''
 def get_ule(id):
     
@@ -193,34 +217,9 @@ def get_ule(id):
     return ule
 
 
-def push_err(txt):
-    mess = txt
-    
-    ta funkcja służy do poinformowania nas o errorach
-    pomyślałam, że skoro ule mówią nam, że się źle czują to apka również może
-    pushniesz wiadomość txt z id_ula 'U' (jak user) i z kodem do ustalenia
-    do tabeli alerty (którą trzeba stworzyć)
-    
-
-                                                                                                    #to chcę na zaraz
-def check_err(id):
-    
-    sprawdza ostatni stan stan ula dla jego id z tabeli alerty, 
-    jesli nie ma erroru zwraca w ciagu ostatnich 5 minut daje False
-    
-    if id == 1:
-        return False, 'good'
-    if id == 0:
-        return True, 'bad: error type'
 
 
-def get_err(id):
-    
-    zwraca ostatnie 10 errorów dla dane id ula
-    
-    tab = [['2020-01-17; 18:48:09','E01', 'Ziąb'], ['2020-01-17; 18:48:09','E02', 'Miód'], 
-    ['2020-01-17; 18:48:09','E00', 'Nieznany błąd'], 
-    ['2020-01-17; 18:48:09','E01', 'Ziąb'], ['2020-01-17; 18:48:09','E03', 'Ucieczka']]
-    return tab
+
+
 
 '''
