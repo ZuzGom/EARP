@@ -2,54 +2,21 @@
 
 from kivy.app import App
 from kivy.core.window import Window
+from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from plyer import notification
-#from threading import Thread
 from gardenmat.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 from bat import *
 from kivy.core.image import Image
+from kivy.uix.image import Image as image
+import webbrowser
 
-
-'''
-try:
-    
-except Exception as ex:
-
-    err = '{}: {})'.format(ex.__class__.__name__, ex)
-    notification.notify(title=err, message=err[50:], timeout=20)
-'''
-
-#threads=[]
-# Create both screens. Please note the root.manager.current: this is how
-# you can control the ScreenManager from kv. Each screen has by default a
-# property manager that gives you the instance of the ScreenManager used.
-
-# root = root()
-# root = Widget()
-
-
-'''
-class Klasa(object):
-    def __init__(self, a=1):
-        super(MyClass, self).__init__()
-        self.a_min = 0
-        self.a_max = 100
-        self.a = a
-
-    def _get_a(self):
-        return self._a
-    def _set_a(self, value):
-        if value < self.a_min or value > self.a_max:
-            raise ValueError('a out of bounds')
-        self._a = value
-    a = property(_get_a, _set_a)
-'''
 
 def manag(scr):
-    # scr.add_widget(MenuScreen(name="menu"))
     scr.add_widget(Ule(name="ule"))
     scr.add_widget(Alert(name="alert"))
     scr.add_widget(Notif(name="arch"))
@@ -87,14 +54,15 @@ global MenuScreen, Ule, Alert, sm, czas
 
 sm = ScreenManager(transition=NoTransition())
 
-
+class Err(Label):
+    pass
+class Maly(image):
+    pass
 class Menu(FloatLayout):
-
     texture = Image('image/st.png').texture
     @staticmethod
     def now(name):
         sm.current = name
-        #Notif.init(self)
         
 
 class Sett(Screen):
@@ -114,63 +82,65 @@ class Ule(Screen):
         global ul_id
         self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf()
 
+
 class Alert(Screen):   
-    czas = data()
     
     def up(self):
-        czas = data()
-        self.ids.tim.text = czas
+        def op(instance):
+            webbrowser.open('http://13c058b20a8b.ngrok.io/c/jF3GCI2kVcyQzv0v')
+    
+        dane = get_err()
+        self.ids.eror.clear_widgets()
+        for i in range(len(dane)):
+            tekst = str(dane[i][0]) + '\nKod:' + str(dane[i][2]) + '\n' + str(dane[i][3]) 
+            log = Err(text=tekst)
+            box = BoxLayout(orientation='horizontal') 
+            box.add_widget(Maly())
+            box.add_widget(log)
+            self.ids.eror.add_widget(box)
+        but =Button(text="Więcej")
+        but.bind(on_release=op)
+        self.ids.eror.add_widget(but)
+        self.ids.eror.add_widget(Err(text=" "))
+        
 
 class Notif(Screen):
     
     def init(self):
         self.ids.dropdown.dismiss()
     def updt(self,text, time):
-        self.ids.dropdown.select(text)
-        
+        self.ids.dropdown.select(text)        
         self.ids.wykres.clear_widgets()
-        ax.clear()
-        
-        rysuj(get_all(time))
-        
-        
+        ax.clear()        
+        rysuj(get_all(time))        
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
     def godzina(self,text):
-        self.ids.dropdown.select(text)
-        
+        self.ids.dropdown.select(text)        
         self.ids.wykres.clear_widgets()
-        ax.clear()
-        
-        rysuj(get_all_hour())
-        
+        ax.clear()        
+        rysuj(get_all_hour())       
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
     
     def dzien(self,text):
-        self.ids.dropdown.select(text)
-        
+        self.ids.dropdown.select(text)        
         self.ids.wykres.clear_widgets()
-        ax.clear()
-        
-        rysuj(get_all_day())
-        
+        ax.clear()        
+        rysuj(get_all_day())       
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
     def miesiac(self,text):
-        self.ids.dropdown.select(text)
-        
+        self.ids.dropdown.select(text)        
         self.ids.wykres.clear_widgets()
-        ax.clear()
-        
-        rysuj(get_all_month())
-        
+        ax.clear()        
+        rysuj(get_all_month())        
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
     def rok(self,text):
-        self.ids.dropdown.select(text)
-        
+        self.ids.dropdown.select(text)        
         self.ids.wykres.clear_widgets()
-        ax.clear()
-        
-        rysuj(get_all_year())
-        
+        ax.clear() 
+        rysuj(get_all_year())      
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
 
@@ -190,30 +160,24 @@ class Wykres(FigureCanvasKivyAgg):
         super(Wykres, self).__init__(plt.gcf(), **kwargs)
 
 
-# sm = ScreenManager()
-# Scr.add_widget(MenuScreen(name="menu"))
 
 class TestApp(App):
     Window.clearcolor = (40 / 255, 40 / 255, 40 / 255, 1)
 
     def build(self):
-        # sm = ScreenManager()
-        #Notif.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
         manag(sm)
         return sm
 
-
+if __name__ == '__main__':
+    TestApp().run()
 # buildozer android debug deploy run
-
+'''
 try:
     if __name__ == '__main__':
         TestApp().run()
-        '''
-        t = Thread(target=TestApp().run())
-        t.start()
-        threads.append(t)
-        print('ye')
-        '''
+        
+        
+        
 except Exception as ex:
     print(ex)
     err = '{}: {})'.format(ex.__class__.__name__, ex)
@@ -222,3 +186,4 @@ except Exception as ex:
     notification.notify(title=err, message=err[50:], timeout=20)
     #notification.notify(title='Prosimy o wysłanie maila z błędem', message='Dziękujemy za współpracę', timeout=20)
     # email.send(recipient='zuzgom@gmail.com', subject ='Error', text=ex, create_chooser=True)
+    '''

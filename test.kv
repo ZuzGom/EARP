@@ -79,7 +79,7 @@
                 size_hint_y: None
             MenBut:
                 text: "Alerty"                
-                on_press: root.now('alert')
+                on_press: root.now('alert')                
                 size_hint_y: None
                 #height: '48dp'
             MenBut:
@@ -150,37 +150,76 @@
                 text: ""               
             
     Menu:
+<Maly@Image>:
+    
+    source: "image/ul.png"
+    size_hint:None,.8
+    canvas.before:
+        Color: 
+            rgba: (20/255,20/255,20/255,0.5)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<Err@Label>:
+    size_hint: 1,.8
+    text_size: self.width, None
+    #halign: 'middle'
+    canvas.before:
+        Color: 
+            rgba: (20/255,20/255,20/255,0.5)
+        Rectangle:
+            pos: self.pos
+            size: self.size
 <Alert>
     Image:
         source: "image/ul_sad.png"
         pos: root.width - self.width, root.height - self.height
         size: root.width, root.height - 10
-    BoxLayout:
 
-        id: layout
-        
-        orientation: "vertical"
-        pos: 0, 0 
-        
-        size_hint: 1, 0.9
 
-        padding: 60
-        spacing: 10
-        CoLabel:
-            text: "Wszystkie ule są w porządku"
-        CoButton:
-            id: tim
-            text: root.czas
-            on_press: root.up()
+    ScrollView:
+        size: 500, 3*root.height
+        pos: root.width - self.width, .9*root.height - self.height
+        BoxLayout:
         
-        Label:
-            text:""
-        Label:
-            text:""
-        CoButton:
-            text: "Sprawdź"
-            background_color: (60/255,60/255,60/255,0.5)
-            on_press: idle()
+            orientation: "vertical"
+            pos: root.width -self.width + 10, .9*root.height - self.height
+            size: root.width-20, 2*root.height - 100
+            size_hint: None, None
+            spacing: 1
+            GridLayout:                      
+                cols: 2
+                size_hint: 1,.2
+                CoLabel:
+                    text: "Wszystkie ule są w porządku"
+                    text_size: self.width, None
+                    size_hint: 1,.5 
+                
+                CoButton:
+                    text: "Sprawdź"
+                    background_color: (60/255,60/255,60/255,0.5)
+                    on_press: idle()
+                    size_hint: 1,.5
+                CoLabel:
+                    text: "Poprzednie alerty:"
+                    size_hint:1,.5   
+                ButImage:
+                    id: but
+                    # take 50% size of the FloatLayout
+                    size_hint: 1,.5 
+                    # Make Button change it's opacity when pressed for visual indication
+                    opacity: 1 if self.state == 'normal' else .2
+                    source: 'image/refr.png'
+                    on_press: root.up()
+                    pos: self.pos
+                    #size_hint: 1,0.25
+                
+            BoxLayout:
+                id: eror        
+                orientation: "vertical"
+                spacing: 1
+
+        
     Menu:
 <Notif>
     BoxLayout:
@@ -255,7 +294,7 @@
         CoLabel:
             text: 'Witamy w Elektronicznym Asystencie Rodziny Pszczelej!\nAby móc otrzymywać powiadomienia wymagane jest potwierdzenie subskrypcji kanału.\nTo jeden przycisk na stronie internetowej, zaraz pod historią Twoich powiadomień'
             text_size: self.width, None   
-            font_size: 30     
+            font_size: '30sp'     
         BoxLayout:
             size_hint: 1,.25
             orientation: 'horizontal'
