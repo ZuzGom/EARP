@@ -88,8 +88,7 @@
                 #on_press: Notif.wyk()
                 size_hint_y: None
                 #height: '48dp'                 
-            ButImage:
-                id: but
+            ButImage:                
                 # take 50% size of the FloatLayout
                 size_hint: .5, None
                 # Make Button change it's opacity when pressed for visual indication
@@ -111,13 +110,14 @@
 
 
 <Ule>
-
+    dat: dat.__self__
+    tem: tem.__self__
+    hum: hum.__self__
+    wei: wei.__self__
     ScrollView:
         size: 500, root.height
         pos: root.width - self.width, root.height - self.height - 200
-        BoxLayout:
-            id: layout
-        
+        BoxLayout:                   
             orientation: "vertical"
             pos: root.width -self.width + 10, root.height - self.height - 50
             size: root.width-20, root.height - 100
@@ -137,8 +137,7 @@
                 Chud:
                     id:hum
                     text: root.humi 
-            ButImage:
-                id: but
+            ButImage:                
                 # take 50% size of the FloatLayout
                 size_hint: 1,.5 
                 # Make Button change it's opacity when pressed for visual indication
@@ -171,6 +170,7 @@
             pos: self.pos
             size: self.size
 <Alert>
+    eror: eror.__self__
     Image:
         source: "image/ul_sad.png"
         pos: root.width - self.width, root.height - self.height
@@ -204,7 +204,6 @@
                     text: "Poprzednie alerty:"
                     size_hint:1,.5   
                 ButImage:
-                    id: but
                     # take 50% size of the FloatLayout
                     size_hint: 1,.5 
                     # Make Button change it's opacity when pressed for visual indication
@@ -222,6 +221,9 @@
         
     Menu:
 <Notif>
+    btn:btn.__self__
+    dropdown: dropdown.__self__
+    wykres: wykres.__self__
     BoxLayout:
         orientation: "vertical"
         pos: 0, root.height - 0.5*self.height
@@ -294,7 +296,7 @@
         CoLabel:
             text: 'Witamy w Elektronicznym Asystencie Rodziny Pszczelej!\nAby móc otrzymywać powiadomienia wymagane jest potwierdzenie subskrypcji kanału.\nTo jeden przycisk na stronie internetowej, zaraz pod historią Twoich powiadomień'
             text_size: self.width, None   
-            font_size: '30sp'     
+            font_size: '25sp'     
         BoxLayout:
             size_hint: 1,.25
             orientation: 'horizontal'
@@ -328,7 +330,6 @@
 <Sett>:
     BoxLayout:
 
-        id: layout
         spacing: 5
         orientation: "vertical"
         #size: root.width, root.height *0.9

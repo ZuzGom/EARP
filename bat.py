@@ -34,7 +34,7 @@ def execute_query(connection, query):
         connection.commit()
         #print("Query executed successfully")
     except Error as e:
-        #print("The error " + str(e) + " occurred")
+        print("The error " + str(e) + " occurred")
 
 
 #Important function, which download live information about bees house

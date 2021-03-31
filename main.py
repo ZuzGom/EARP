@@ -98,7 +98,9 @@ class Alert(Screen):
             box.add_widget(Maly())
             box.add_widget(log)
             self.ids.eror.add_widget(box)
-        but =Button(text="Więcej")
+        but =Button(text="Więcej", size_hint=(1, None))
+        for _ in range(len(dane),5):
+            self.ids.eror.add_widget(Err(text=" "))
         but.bind(on_release=op)
         self.ids.eror.add_widget(but)
         self.ids.eror.add_widget(Err(text=" "))
@@ -168,22 +170,22 @@ class TestApp(App):
         manag(sm)
         return sm
 
-if __name__ == '__main__':
-    TestApp().run()
+#if __name__ == '__main__':
+    #TestApp().run()
 # buildozer android debug deploy run
-'''
+
 try:
     if __name__ == '__main__':
         TestApp().run()
         
         
-        
+      
 except Exception as ex:
     print(ex)
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     print(err)
-    
+    push_alert(0,0,err)
     notification.notify(title=err, message=err[50:], timeout=20)
     #notification.notify(title='Prosimy o wysłanie maila z błędem', message='Dziękujemy za współpracę', timeout=20)
     # email.send(recipient='zuzgom@gmail.com', subject ='Error', text=ex, create_chooser=True)
-    '''
+   
