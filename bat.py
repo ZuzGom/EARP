@@ -1,5 +1,18 @@
 from datetime import datetime, timedelta
 from mysql.connector import connect, Error
+import requests
+from bs4 import BeautifulSoup
+
+# funnkcja która zwraca url bazy
+def track():
+    try:
+        page = requests.get('https://github.com/ZuzGom/remote/blob/main/url.txt')
+    except requests.exceptions.ConnectionError:
+        linia = None
+    else:       
+        soup = BeautifulSoup(page.content, 'html.parser')
+        linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
+    return linia
 
 #Function which connect with database
 def polaczenie():
