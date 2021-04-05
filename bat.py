@@ -18,10 +18,11 @@ def track():
 def polaczenie():
     try:
         connection = connect(
-            host="ekonomik.atthost24.pl",
-            user="18013_earp",
-            password="earp.123",
-            database="18013_earp"
+        #Tutaj trzeba wpisac HOSTA
+            host=" ",
+            user="ul",
+            password="earp123",
+            database="Baza_EARP"
         )
         return connection
     except Error as e:
@@ -86,16 +87,12 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
+get_inf()
 
 #Function for Zuzia, check if the time is updatet
 def data():
     now = datetime.now()
     return str(now)
-
-
-#ale batiś to jest projekt dla polskich pszczelarzy
-#chyba że lubisz sobie utrudniać ;)
-#Kiedyś do CV będzie można sobie wrzucić i lepiej będzie wyglądały komentarze po angielsku
 
 
 #Future function
