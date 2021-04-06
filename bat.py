@@ -3,7 +3,7 @@ from mysql.connector import connect, Error
 import requests
 from bs4 import BeautifulSoup
 
-# funnkcja która zwraca url bazy
+'''
 def track():
     try:
         page = requests.get('https://github.com/ZuzGom/remote/blob/main/url.txt')
@@ -13,7 +13,9 @@ def track():
         soup = BeautifulSoup(page.content, 'html.parser')
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
+'''
 
+# funnkcja która zwraca url bazy
 def tcp():
     try:
         page = requests.get('https://github.com/ZuzGom/remote/blob/main/tcp.txt')
@@ -24,6 +26,8 @@ def tcp():
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
 
+
+'''Stare polaczenie do starej bazy
 def pol_old():
     try:
         connection = connect(
@@ -35,6 +39,8 @@ def pol_old():
         return connection
     except Error as e:
         print(e)
+'''
+
 #Function which connect with database
 def polaczenie():
     url = tcp().split(':')
