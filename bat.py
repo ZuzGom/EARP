@@ -14,21 +14,43 @@ def track():
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
 
-#Function which connect with database
-def polaczenie():
+def tcp():
+    try:
+        page = requests.get('https://github.com/ZuzGom/remote/blob/main/tcp.txt')
+    except requests.exceptions.ConnectionError:
+        linia = None
+    else:       
+        soup = BeautifulSoup(page.content, 'html.parser')
+        linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
+    return linia
+
+def pol_old():
     try:
         connection = connect(
-        #Tutaj trzeba wpisac HOSTA
-            host=" ",
-            user="ul",
-            password="earp123",
-            database="Baza_EARP"
+            host="ekonomik.atthost24.pl",
+            user="18013_earp",
+            password="earp.123",
+            database="18013_earp"
         )
         return connection
     except Error as e:
-        return notification.notify(title=e, message=e[50:])
-
-
+        print(e)
+#Function which connect with database
+def polaczenie():
+    url = tcp().split(':')
+    try:
+        connection = connect(
+        #Tutaj trzeba wpisac HOSTA
+            host=url[1][2:],
+            port=url[2],
+            user="ul",
+            password="earp123",
+            database="Dane"
+        )
+        return connection
+    except Error as e:
+        print(e)
+        
 def execute_read_query(connection, query):
     cursor = connection.cursor()
     try:
@@ -87,7 +109,7 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
-get_inf()
+print(get_inf())
 
 #Function for Zuzia, check if the time is updatet
 def data():
