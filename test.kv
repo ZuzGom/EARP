@@ -114,6 +114,7 @@
     tem: tem.__self__
     hum: hum.__self__
     wei: wei.__self__
+    cialo: cialo.__self__
     ScrollView:
         size: 500, root.height
         pos: root.width - self.width, root.height - self.height - 200
@@ -145,8 +146,9 @@
                 source: 'image/refr.png'
                 on_press: root.up()
                 #size_hint: 1,0.25 
-            Label:
-                text: ""               
+            BoxLayout:
+                id: cialo                   
+                orientation: "vertical"              
             
     Menu:
 <Maly@Image>:
@@ -170,7 +172,7 @@
             pos: self.pos
             size: self.size
 <Alert>
-    eror: eror.__self__
+    #eror: eror.__self__
     Image:
         source: "image/ul_sad.png"
         pos: root.width - self.width, root.height - self.height
@@ -214,6 +216,7 @@
                     #size_hint: 1,0.25
                 
             BoxLayout:
+                eror: eror.__self__
                 id: eror        
                 orientation: "vertical"
                 spacing: 1
@@ -296,7 +299,9 @@
         CoLabel:
             text: 'Witamy w Elektronicznym Asystencie Rodziny Pszczelej!\nAby móc otrzymywać powiadomienia wymagane jest potwierdzenie subskrypcji kanału.\nTo jeden przycisk na stronie internetowej, zaraz pod historią Twoich powiadomień'
             text_size: self.width, None   
-            font_size: '25sp'     
+            font_size: '25sp'
+        Image:
+            source:'image/subs.png'     
         BoxLayout:
             size_hint: 1,.25
             orientation: 'horizontal'
@@ -312,8 +317,20 @@
     title: "Instrukcja rezygnacji z powiadomień"
     BoxLayout:
         orientation: 'vertical'
-        Image:
-            source:'image/kot.jpg'
+        BoxLayout:
+            orientation: 'vertical'
+            CoLabel:
+                text: 'Zabierzemy cię teraz na kanał powiadomień'
+                text_size: self.width, None   
+                font_size: '25sp'
+            Image:
+                source:'image/unsub_1.png'
+            CoLabel:
+                text: 'Znajdź kłódkę obok adresu url i wyłącz powiadomienia'
+                text_size: self.width, None   
+                font_size: '25sp'
+            Image:
+                source:'image/unsub_2.png'
         BoxLayout:
             size_hint:1,.25
             orientation: 'horizontal'
@@ -325,7 +342,30 @@
                 text: 'Potrzebuję pomocy'
                 on_release: root.dismiss()
     
+<Comit@Popup>:
+    alert: alert.__self__
+    auto_dismiss: False
+    title: "Zgłaszanie błędów"
+    BoxLayout:
         
+        orientation: 'vertical'
+        CoLabel:
+            text: 'To całkowicie anonimowy formularz zgłoszeniowy. Proszę po krótce opisać swój problem.\nW celu uzyskania konkretnej pomocy proszę o kontakt: \nzuzgom@gmail.com'
+            text_size: self.width, None   
+            font_size: '25sp'
+        TextInput:
+            id: alert   
+            text: "E: "  
+        BoxLayout:
+            size_hint: 1,.25
+            orientation: 'horizontal'
+            Button:
+                text: 'Wyślij'
+                on_release: root.dismiss()
+                on_press: root.send()
+            Button:
+                text: 'Anuluj'
+                on_release: root.dismiss()
 
 <Sett>:
     BoxLayout:
@@ -379,9 +419,10 @@
                 text: root.stts
         BoxLayout:
             orientation: "horizontal"
-            CoLabel:
-                text: "W razie wystąpienia błędu \nproszę o kontakt:\n   zuzgom@gmail.com"
+            CoButton:
+                text: "Zgłoś błąd | Otrzymaj pomoc"
                 size_hint: 2, 1
+                on_release: Factory.Comit().open()
             Image:
                 source: "image/LOG.png"
                 size_hint: 1, 1

@@ -5,15 +5,27 @@ from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from plyer import notification
 from gardenmat.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
-from bat import *
+
 from kivy.core.image import Image
 from kivy.uix.image import Image as image
 import webbrowser
+
+try:
+    from bat import *
+
+except Exception as ex:
+    print(ex)
+    err = '{}: {})'.format(ex.__class__.__name__, ex)
+    print(err)
+    notification.notify(title=err, message=err[50:], timeout=20)
+    push_alert(0,0,err)
+    
 
 
 def manag(scr):
@@ -65,29 +77,26 @@ class Menu(FloatLayout):
         sm.current = name
         
 
-class Sett(Screen):
-    @staticmethod
-    def checkbox_click(value):
-        if value is True:
-            Window.clearcolor = (40 / 255, 40 / 255, 40 / 255, 1)
-        else:
-            Window.clearcolor = (255 / 255, 255 / 255, 235 / 255, 1)
-    stts="Nieaktywne"
-
-
 class Ule(Screen):
     
     data, temp, waga, humi = get_inf()
     def up(self):
         global ul_id
-        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = get_inf()
+        inf=get_inf()
+        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = inf
+        if inf[0]=="00-00-0000 \n 00:00:00":
+            self.ids.cialo.clear_widgets()
+            self.ids.cialo.add_widget(image(source="image/Batis_Pszczola.png"))
+            self.ids.cialo.add_widget(Button(text="^\nSprawdź swoje połączenie!"))
+        else:
+            self.ids.cialo.clear_widgets()
 
 
 class Alert(Screen):   
     
     def up(self):
         def op(instance):
-            webbrowser.open('http://13c058b20a8b.ngrok.io/c/jF3GCI2kVcyQzv0v')
+            webbrowser.open('https://notify.run/c/40CiRtPlbZUFnkHg')
     
         dane = get_err()
         self.ids.eror.clear_widgets()
@@ -144,6 +153,19 @@ class Notif(Screen):
         ax.clear() 
         rysuj(get_all_year())      
         self.ids.wykres.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
+class Comit(Popup):
+    def send(self):
+        push_alert(0,1,str(self.ids.alert.text))
+
+class Sett(Screen):
+    @staticmethod
+    def checkbox_click(value):
+        if value is True:
+            Window.clearcolor = (40 / 255, 40 / 255, 40 / 255, 1)
+        else:
+            Window.clearcolor = (255 / 255, 255 / 255, 235 / 255, 1)
+    stts="Nieaktywne"
 
 
 try:

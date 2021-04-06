@@ -25,8 +25,9 @@ def tcp():
         soup = BeautifulSoup(page.content, 'html.parser')
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
-
-
+u_tcp = tcp().split(':')
+host=u_tcp[1][2:]
+port=u_tcp[2]
 '''Stare polaczenie do starej bazy
 def pol_old():
     try:
@@ -40,15 +41,13 @@ def pol_old():
     except Error as e:
         print(e)
 '''
-
 #Function which connect with database
 def polaczenie():
-    url = tcp().split(':')
     try:
         connection = connect(
         #Tutaj trzeba wpisac HOSTA
-            host=url[1][2:],
-            port=url[2],
+            host=host,
+            port=port,
             user="ul",
             password="earp123",
             database="Dane"
@@ -115,7 +114,7 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
-print(get_inf())
+#print(get_inf())
 
 #Function for Zuzia, check if the time is updatet
 def data():
