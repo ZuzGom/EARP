@@ -11,6 +11,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from plyer import notification
 from gardenmat.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 from kivy.core.image import Image
 from kivy.uix.image import Image as image
@@ -41,24 +42,33 @@ def rysuj(func):
     pltem2=[]
     plwg=[]
     plhum=[]
+    date=[]
     #print(dane)
     for x in dane:
+        
         pltem1.append(float(x[2]))
         pltem2.append(float(x[3]))
         plhum.append(float(x[4]))
         plwg.append(float(x[5]))
+        try:
+            date.append(datetime(x[0][2],x[0][1],x[0][0],x[1][0],x[1][1],0))
+        except TypeError:
+            date.append(x[0]+x[1])
+    #print(date)
     #print(plhum)
     #print(plwg)
     ax.patch.set_facecolor('#151515')
     #ax.patch.set_alpha(0.2)
     ax.tick_params(colors='white', which='both', labelsize='xx-large')
-    plt.plot(pltem1, label='Temp.Zew')
-    plt.plot(pltem2, label='Temp.Wew')
-    plt.plot(plhum, label='Wilgotność')
-    plt.plot(plwg, label='Waga')
+    plt.plot(date, pltem1, label='Temp.Zew')
+    
+    plt.plot(date, pltem2, label='Temp.Wew')
+    plt.plot(date, plhum, label='Wilgotność')
+    plt.plot(date, plwg, label='Waga')
+    
     #ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
     #      fancybox=True, shadow=True, ncol=3)
-
+    plt.gcf().autofmt_xdate()
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',
            ncol=4, mode="expand", borderaxespad=0,fontsize='xx-large')
 
@@ -79,7 +89,7 @@ class Menu(FloatLayout):
 
 class Ule(Screen):
     
-    data, temp, waga, humi = get_inf()
+    data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
     def up(self):
         global ul_id
         inf=get_inf()
