@@ -15,6 +15,20 @@ def track():
     return linia
 '''
 
+'''Stare polaczenie do starej bazy
+def pol_old():
+    try:
+        connection = connect(
+            host="ekonomik.atthost23.pl",
+            user="18012_earp",
+            password="earp.122",
+            database="18012_earp"
+        )
+        return connection
+    except Error as e:
+        print(e)
+'''
+
 # funnkcja która zwraca url bazy
 def tcp():
     try:
@@ -28,19 +42,7 @@ def tcp():
 u_tcp = tcp().split(':')
 host=u_tcp[1][2:]
 port=u_tcp[2]
-'''Stare polaczenie do starej bazy
-def pol_old():
-    try:
-        connection = connect(
-            host="ekonomik.atthost24.pl",
-            user="18013_earp",
-            password="earp.123",
-            database="18013_earp"
-        )
-        return connection
-    except Error as e:
-        print(e)
-'''
+
 #Function which connect with database
 def polaczenie():
     try:
@@ -66,7 +68,6 @@ def execute_read_query(connection, query):
         result = None
         return result
 
-
 #Function which gives data to database
 def execute_query(connection, query):
     cursor = connection.cursor()
@@ -76,7 +77,6 @@ def execute_query(connection, query):
         #print("Query executed successfully")
     except Error as e:
         print("The error " + str(e) + " occurred")
-
 
 #Important function, which download live information about bees house
 def get_inf():
@@ -121,7 +121,6 @@ def data():
     now = datetime.now()
     return str(now)
 
-
 #Future function
 #return 2D tables with data included from now to some date
 def get_all(dni):
@@ -138,7 +137,6 @@ def get_all(dni):
     ['2020-01-17',' 18:48:34',' 23','22',' 54',' 0']
     ]
     return tab
-
 
 #Function return 'tab[]' to TODAY graph
 def get_all_day():
@@ -162,7 +160,6 @@ def get_all_day():
             tab.append(line)
 
     return tab
-
 
 #Function return 'tab[]' to hour back graph
 def get_all_hour():
@@ -188,7 +185,6 @@ def get_all_hour():
             tab.append(line)
 
     return tab
-
 
 #Function return 'tab[]' to month back graph
 def get_all_month():
@@ -234,7 +230,6 @@ def get_all_year():
 
     return tab
 
-
 #Function works
 def push_alert(id, error, tresc):
     connection = polaczenie()
@@ -262,7 +257,6 @@ def get_err():
             tab.append(line)
     
     return tab
-
 
 '''
 def get_ule(id):
