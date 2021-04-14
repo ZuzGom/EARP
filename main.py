@@ -49,12 +49,9 @@ def rysuj(func):
         pltem2.append(float(x[2]))
         plhum.append(float(x[3]))
         plwg.append(float(x[4]))
-        date.append(datetime.strptime(x[0],'%Y-%m-%d %H:%M:%S'))
+        date.append(datetime(*x[0][0:6]))
         
-            #date.append(datetime(x[0][2],x[0][1],x[0][0],x[1][0],x[1][1],0))
-    print(date)
-    #print(plhum)
-    #print(plwg)
+
     ax.patch.set_facecolor('#151515')
     #ax.patch.set_alpha(0.2)
     ax.tick_params(colors='white', which='both', labelsize='xx-large')
@@ -86,8 +83,8 @@ class Menu(FloatLayout):
         
 
 class Ule(Screen):
-    
-    data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
+    data, temp, waga, humi = get_inf()
+    #data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
     def up(self):
         global ul_id
         inf=get_inf()
@@ -167,6 +164,8 @@ class Comit(Popup):
         push_alert(0,1,str(self.ids.alert.text))
 
 class Sett(Screen):
+    def op(self):
+        webbrowser.open(track()+'earp')
     @staticmethod
     def checkbox_click(value):
         if value is True:

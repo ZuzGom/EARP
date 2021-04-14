@@ -2,6 +2,7 @@
 #:import idle nf.idle
 #:import reg nf.reg
 #:import Factory kivy.factory.Factory
+#:import platform kivy.utils.platform
 <ButImage@ButtonBehavior+AsyncImage>
 <CoButton@Button>
     background_color: (60/255,60/255,60/255,0.5)
@@ -223,6 +224,59 @@
 
         
     Menu:
+
+<Raport@Popup>:
+    #Y: Y.__self__
+    #M: M.__self__
+    #D: D.__self__
+    auto_dismiss: False
+    title: "Pobieranie raportu"
+    BoxLayout:       
+        orientation: 'vertical'
+        Err:
+            text: "    Wpisz datę od której chcesz otrzymać raport"
+            size_hint:1,0.5
+        GridLayout:
+            rows: 2
+            size_hint:1,0.5
+            Label:
+                text: "Rok:"
+            Label:
+                text: "Miesiąc:"
+            Label:
+                text: "Dzień:"
+            TextInput:
+                id: Y
+                text: "2021"
+            TextInput:
+                id: M
+                text: "03"
+            TextInput:
+                id: D
+                text: "20"
+        Err:
+            text: "    Wybierz lokalizację do zapisu pliku"
+            size_hint:1,0.5
+        FileChooserIconView:
+            rootpath:'/storage/emulated/0/' if platform == 'android' else '/home/'
+            id: lokalizacja
+            #text:"    "
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                text: "Zapisz"
+            
+                size_hint:1,0.5
+                on_release: root.dismiss()
+                #on_press: reg()
+            Button:
+                text: 'Anuluj'
+                size_hint:1,0.5
+                on_release: root.dismiss()
+
+            
+
+
 <Notif>
     btn:btn.__self__
     dropdown: dropdown.__self__
@@ -286,9 +340,11 @@
             Wykres:
                 id: clapl
 
-        #Image:
-            #source: "image/psz.png"
-            #size_hint: 1, 0.5
+        Button:
+            source: "image/psz.png"
+            size_hint: 1, 0.5
+            text: "Pobierz raport"
+            on_release: Factory.Raport().open()
             
     Menu:  
 
@@ -411,13 +467,11 @@
                 
         BoxLayout:
             orientation: "horizontal"
-            CoLabel:
-                text:"Status obecny powiadomień: "
-                size_hint: 2,1
-            CoLabel:
-                id: status
-                size_hint: 1,1
-                text: root.stts
+            CoButton:
+                text:"Zabierz mnie na stronę EARPu"
+                on_press: root.op
+                #size_hint: 2,1
+            
         BoxLayout:
             orientation: "horizontal"
             CoButton:

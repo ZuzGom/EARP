@@ -66,7 +66,7 @@ def get_inf():
 #Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
 #Dolozylem - Year, Month, Day, Hour, Minute, Second
         select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements ORDER BY Datetime DESC LIMIT 1"
-        query = execute_read_query(connection, select_query)
+        query = execute_read_query(connection, select_query)[0]
 
         connection.close()
 
@@ -115,13 +115,9 @@ def get_all_day():
         select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
         connection.close()
-        
-        #To musisz zmienic bo inna kolejnosc
-        #datet=str(query[-1][-2]) + " "
-        #datet+=str(query[-1][-1])
 
-        for x in query:
-            line = [datet]
+        for x in query: 
+            line = [x[-6:]]
             line += list(x[:4])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
@@ -144,16 +140,13 @@ def get_all_hour():
 #Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
 		#[0] - Tablicy to jest najnowszy jak coś
 #Dolozylem - Year, Month, Day, Hour, Minute, Second
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ((Hour=" + str(int(godzina)) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
-        datet=str(query[-1][-2]) + " "       
-        datet+=str(query[-1][-1])
-
         for x in query:
-            line = [datet]
+            line = [x[-6:]]
             line += list(x[:4])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
@@ -180,11 +173,8 @@ def get_all_month():
 
         connection.close()
 
-        datet=str(query[-1][-2]) + " "       
-        datet+=str(query[-1][-1])
-
         for x in query:
-            line = [datet]
+            line = [x[-6:]]
             line += list(x[:4])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
@@ -209,11 +199,8 @@ def get_all_year():
 
         connection.close()
 
-        datet=str(query[-1][-2]) + " "       
-        datet+=str(query[-1][-1])
-
         for x in query:
-            line = [datet]
+            line = [x[-6:]]
             line += list(x[:4])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
