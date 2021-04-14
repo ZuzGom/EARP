@@ -43,6 +43,7 @@ u_tcp = tcp().split(':')
 host=u_tcp[1][2:]
 port=u_tcp[2]
 
+#global connection
 #Function which connect with database
 def polaczenie():
     try:
@@ -57,14 +58,18 @@ def polaczenie():
         return connection
     except Error as e:
         print(e)
-        
+
+#print(tcp())
+#connection = polaczenie()
+
 def execute_read_query(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
         result = cursor.fetchall()
         return result
-    except Error:
+    except Exception as e:
+        print(e)
         result = None
         return result
 
@@ -127,12 +132,12 @@ def get_all(dni):
 
     #data, godzina, temp_wew, temp_zew, wilgotnosc, waga
     tab = [
-    ['2020-01-17',' 18:48:09',' 22','24',' 54',' 0'],
-    ['2020-01-17',' 18:48:14',' 23','22',' 55',' 0'],
-    ['2020-01-17',' 18:48:19',' 23','28',' 59',' 0'],
-    ['2020-01-17',' 18:48:24',' 23','28',' 56',' 0'],
-    ['2020-01-17',' 18:48:29',' 23','29',' 54',' 0'],
-    ['2020-01-17',' 18:48:34',' 23','22',' 54',' 0']
+    ['2020-01-17 18:48:09',' 22','24',' 54',' 0'],
+    ['2020-01-17 18:48:14',' 23','22',' 55',' 0'],
+    ['2020-01-17 18:48:19',' 23','28',' 59',' 0'],
+    ['2020-01-17 18:48:24',' 23','28',' 56',' 0'],
+    ['2020-01-17 18:48:29',' 23','29',' 54',' 0'],
+    ['2020-01-17 18:48:34',' 23','22',' 54',' 0']
     ]
     return tab
 
@@ -147,19 +152,22 @@ def get_all_day():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "Temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
-
+        datet=str(query[-1][-2]) + " "
+        datet+=str(query[-1][-1])
+        print(datet)
         connection.close()
 
         #To trzeba zmienic
         for x in query:
-            line = [(x[:3]),(x[3:5])] + list(x[5:])
+            line = list(x[:4])
+            print(line)
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
 
     return tab
-
+print(get_all_day())
 #Function return 'tab[]' to hour back graph
 def get_all_hour():
     teraz = datetime.now()
