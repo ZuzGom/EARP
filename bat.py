@@ -63,7 +63,8 @@ def get_inf():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements ORDER BY Datetime DESC LIMIT 1"
+#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements ORDER BY Datetime DESC LIMIT 1"
         query = execute_read_query(connection, select_query)
 
         connection.close()
@@ -80,6 +81,9 @@ def get_inf():
         humi = str(query[3])
         kalendarz = str(query[4])
         zegar = str(query[5])
+        
+        #Teraz elementy 6-8 trzeba jako date jakos
+        #Elementy 9-11 jako godzine jakos
 
         data = kalendarz + "\n" + zegar
         temp= "zew: "+ temp1 + '°C\nwew: ' + temp2 + '°C'
@@ -94,6 +98,36 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
+#Function return 'tab[]' to hour back graph
+def get_all_hour():
+    teraz = datetime.now()
+    minuta = str(teraz.minute)
+    godzina = str(teraz.hour)
+    dzien = str(teraz.day)
+    miesiac = str(teraz.month)
+    rok = str(teraz.year)
+
+    tab = []
+    connection = polaczenie()
+
+    if(connection!=None):
+#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
+        #[0] - Tablicy to jest najnowszy jak coś
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        query = execute_read_query(connection, select_query)
+
+        connection.close()
+
+        '''
+        #To trzeba zmienić bo inna kolejność
+        for x in query:
+            line = [(x[:3]), (x[3:5])] + list(x[5:])
+            line[-1] = int(float(line[-1])) / 1000
+            tab.append(line)
+        '''
+
+    return tab
+
 #Function return 'tab[]' to TODAY graph
 def get_all_day():
     teraz = datetime.now()
@@ -105,8 +139,9 @@ def get_all_day():
     connection = polaczenie()
 
     if(connection!=None):
+#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
         #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
         connection.close()
         
@@ -124,35 +159,6 @@ def get_all_day():
 
     return tab
 
-#Function return 'tab[]' to hour back graph
-def get_all_hour():
-    teraz = datetime.now()
-    minuta = str(teraz.minute)
-    godzina = str(teraz.hour)
-    dzien = str(teraz.day)
-    miesiac = str(teraz.month)
-    rok = str(teraz.year)
-
-    tab = []
-    connection = polaczenie()
-
-    if(connection!=None):
-        #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
-        query = execute_read_query(connection, select_query)
-
-        connection.close()
-
-        '''
-        #To trzeba zmienić bo inna kolejność
-        for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
-            tab.append(line)
-        '''
-
-    return tab
-
 #Function return 'tab[]' to month back graph
 def get_all_month():
     teraz = datetime.now()
@@ -164,8 +170,9 @@ def get_all_month():
     connection = polaczenie()
 
     if(connection!=None):
+#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
         #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
@@ -189,8 +196,9 @@ def get_all_year():
     connection = polaczenie()
 
     if(connection!=None):
+#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
         #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE Year = " + rok + " ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE Year = " + rok + " ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
