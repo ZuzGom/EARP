@@ -114,8 +114,6 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
-#print(get_inf())
-
 #Function for Zuzia, check if the time is updatet
 def data():
     now = datetime.now()
