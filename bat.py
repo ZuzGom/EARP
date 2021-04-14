@@ -113,17 +113,17 @@ def get_all_day():
         datet=str(query[-1][-2]) + " "
         
         #Co to za zapis w Pythonie? += Chyba musi być 'datet = datet + str(query[-1][-1])' ale ja sie nie znam
+        # to zwykły operator jak w c++, -=, +=, *= itd,  rowne to jest temu co napisałeś
         datet+=str(query[-1][-1])
 
-        #To trzeba zmienic
         for x in query:
-            line = list(x[:4])
-            print(line)
+            line = [datet]
+            line += list(x[:4])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
 
     return tab
-
+#print(get_all_day())
 #Function return 'tab[]' to hour back graph
 def get_all_hour():
     teraz = datetime.now()
@@ -143,15 +143,17 @@ def get_all_hour():
 
         connection.close()
 
-        '''
-        #To trzeba zmienić bo inna kolejność
+        datet=str(query[-1][-2]) + " "       
+        datet+=str(query[-1][-1])
+
         for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
+            line = [datet]
+            line += list(x[:4])
+            line[-1]=int(float(line[-1]))/1000
             tab.append(line)
-        '''
 
     return tab
+
 
 #Function return 'tab[]' to month back graph
 def get_all_month():
@@ -170,13 +172,15 @@ def get_all_month():
 
         connection.close()
 
-        '''
-        #To trzeba zmienić bo inna kolejność
+        datet=str(query[-1][-2]) + " "       
+        datet+=str(query[-1][-1])
+
         for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
+            line = [datet]
+            line += list(x[:4])
+            line[-1]=int(float(line[-1]))/1000
             tab.append(line)
-        '''
+        
             
     return tab
 
@@ -195,13 +199,14 @@ def get_all_year():
 
         connection.close()
 
-        '''
-        #To trzeba zmienić bo inna kolejność
+        datet=str(query[-1][-2]) + " "       
+        datet+=str(query[-1][-1])
+
         for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
+            line = [datet]
+            line += list(x[:4])
+            line[-1]=int(float(line[-1]))/1000
             tab.append(line)
-        '''
 
     return tab
 
