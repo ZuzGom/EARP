@@ -3,33 +3,12 @@ from mysql.connector import connect, Error
 import requests
 from bs4 import BeautifulSoup
 
-'''
-def track():
-    try:
-        page = requests.get('https://github.com/ZuzGom/remote/blob/main/url.txt')
-    except requests.exceptions.ConnectionError:
-        linia = None
-    else:       
-        soup = BeautifulSoup(page.content, 'html.parser')
-        linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
-    return linia
-'''
+#Function for Zuzia, check if the time is updatet
+def data():
+    now = datetime.now()
+    return str(now)
 
-'''Stare polaczenie do starej bazy
-def pol_old():
-    try:
-        connection = connect(
-            host="ekonomik.atthost23.pl",
-            user="18012_earp",
-            password="earp.122",
-            database="18012_earp"
-        )
-        return connection
-    except Error as e:
-        print(e)
-'''
-
-# funnkcja która zwraca url bazy
+# funkcja która zwraca URL bazy
 def tcp():
     try:
         page = requests.get('https://github.com/ZuzGom/remote/blob/main/tcp.txt')
@@ -39,16 +18,15 @@ def tcp():
         soup = BeautifulSoup(page.content, 'html.parser')
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
+
 u_tcp = tcp().split(':')
 host=u_tcp[1][2:]
 port=u_tcp[2]
 
-#global connection
 #Function which connect with database
 def polaczenie():
     try:
         connection = connect(
-        #Tutaj trzeba wpisac HOSTA
             host=host,
             port=port,
             user="ul",
@@ -58,9 +36,6 @@ def polaczenie():
         return connection
     except Error as e:
         print(e)
-
-#print(tcp())
-#connection = polaczenie()
 
 def execute_read_query(connection, query):
     cursor = connection.cursor()
@@ -88,7 +63,7 @@ def get_inf():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements ORDER BY Datetime DESC LIMIT 1"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements ORDER BY Datetime DESC LIMIT 1"
         query = execute_read_query(connection, select_query)
 
         connection.close()
@@ -99,7 +74,7 @@ def get_inf():
         #Temperature outside - temp2
         temp2 = str(query[1])
 
-        #Zuzia solution
+        #Zuzia solution - Waga
         waga = str(int(float(query[2]))/1000)
 
         humi = str(query[3])
@@ -119,28 +94,6 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
-#Function for Zuzia, check if the time is updatet
-def data():
-    now = datetime.now()
-    return str(now)
-
-#Future function
-#return 2D tables with data included from now to some date
-def get_all(dni):
-    date = datetime.now()-timedelta(minutes=dni)
-            #od tej daty
-
-    #data, godzina, temp_wew, temp_zew, wilgotnosc, waga
-    tab = [
-    ['2020-01-17 18:48:09',' 22','24',' 54',' 0'],
-    ['2020-01-17 18:48:14',' 23','22',' 55',' 0'],
-    ['2020-01-17 18:48:19',' 23','28',' 59',' 0'],
-    ['2020-01-17 18:48:24',' 23','28',' 56',' 0'],
-    ['2020-01-17 18:48:29',' 23','29',' 54',' 0'],
-    ['2020-01-17 18:48:34',' 23','22',' 54',' 0']
-    ]
-    return tab
-
 #Function return 'tab[]' to TODAY graph
 def get_all_day():
     teraz = datetime.now()
@@ -152,12 +105,15 @@ def get_all_day():
     connection = polaczenie()
 
     if(connection!=None):
+        #[0] - Tablicy to jest najnowszy jak coś
         select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
-        datet=str(query[-1][-2]) + " "
-        datet+=str(query[-1][-1])
-        print(datet)
         connection.close()
+        
+        datet=str(query[-1][-2]) + " "
+        
+        #Co to za zapis w Pythonie? += Chyba musi być 'datet = datet + str(query[-1][-1])' ale ja sie nie znam
+        datet+=str(query[-1][-1])
 
         #To trzeba zmienic
         for x in query:
@@ -167,7 +123,7 @@ def get_all_day():
             tab.append(line)
 
     return tab
-print(get_all_day())
+
 #Function return 'tab[]' to hour back graph
 def get_all_hour():
     teraz = datetime.now()
@@ -181,15 +137,19 @@ def get_all_hour():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ")"
+        #[0] - Tablicy to jest najnowszy jak coś
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
+        '''
+        #To trzeba zmienić bo inna kolejność
         for x in query:
             line = [(x[:3]), (x[3:5])] + list(x[5:])
             line[-1] = int(float(line[-1])) / 1000
             tab.append(line)
+        '''
 
     return tab
 
@@ -204,15 +164,19 @@ def get_all_month():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ")"
+        #[0] - Tablicy to jest najnowszy jak coś
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
+        '''
+        #To trzeba zmienić bo inna kolejność
         for x in query:
             line = [(x[:3]), (x[3:5])] + list(x[5:])
             line[-1] = int(float(line[-1])) / 1000
             tab.append(line)
+        '''
             
     return tab
 
@@ -225,19 +189,23 @@ def get_all_year():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Year = " + rok
+        #[0] - Tablicy to jest najnowszy jak coś
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE Year = " + rok + " ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
+        '''
+        #To trzeba zmienić bo inna kolejność
         for x in query:
             line = [(x[:3]), (x[3:5])] + list(x[5:])
             line[-1] = int(float(line[-1])) / 1000
             tab.append(line)
+        '''
 
     return tab
 
-#Function works
+#Function pushing alert
 def push_alert(id, error, tresc):
     connection = polaczenie()
     
@@ -266,6 +234,7 @@ def get_err():
     return tab
 
 '''
+#Future function
 def get_ule(id):
     
     ta przyszłościowa funkcja służy do pobierania informacji z tabli 'user' z indeksu ule
@@ -275,4 +244,19 @@ def get_ule(id):
     ule = [1,2]
     return ule
 
+#return 2D tables with data included from now to some date
+def get_all(dni):
+    date = datetime.now()-timedelta(minutes=dni)
+            #od tej daty
+
+    #data, godzina, temp_wew, temp_zew, wilgotnosc, waga
+    tab = [
+    ['2020-01-17 18:48:09',' 22','24',' 54',' 0'],
+    ['2020-01-17 18:48:14',' 23','22',' 55',' 0'],
+    ['2020-01-17 18:48:19',' 23','28',' 59',' 0'],
+    ['2020-01-17 18:48:24',' 23','28',' 56',' 0'],
+    ['2020-01-17 18:48:29',' 23','29',' 54',' 0'],
+    ['2020-01-17 18:48:34',' 23','22',' 54',' 0']
+    ]
+    return tab
 '''
