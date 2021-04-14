@@ -59,11 +59,11 @@ def rysuj(func):
     ax.patch.set_facecolor('#151515')
     #ax.patch.set_alpha(0.2)
     ax.tick_params(colors='white', which='both', labelsize='xx-large')
-    plt.plot(date, pltem1, label='Temp.Zew')
+    plt.plot(date, pltem1, 'o', markersize=1, label='Temp.Zew')
     
-    plt.plot(date, pltem2, label='Temp.Wew')
-    plt.plot(date, plhum, label='Wilgotność')
-    plt.plot(date, plwg, label='Waga')
+    plt.plot(date, pltem2, 'o', markersize=1, label='Temp.Wew')
+    plt.plot(date, plhum, 'o', markersize=1, label='Wilgotność')
+    plt.plot(date, plwg, 'o', markersize=1,label='Waga')
     
     #ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05),
     #      fancybox=True, shadow=True, ncol=3)
@@ -105,7 +105,7 @@ class Alert(Screen):
     
     def up(self):
         def op(instance):
-            webbrowser.open('https://notify.run/c/40CiRtPlbZUFnkHg')
+            webbrowser.open(track()+'earp')
     
         dane = get_err()
         self.ids.eror.clear_widgets()
