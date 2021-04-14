@@ -10,7 +10,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from plyer import notification
 from gardenmat.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
-from datetime import datetime
+import datetime
 
 from kivy.core.image import Image
 from kivy.uix.image import Image as image
@@ -45,15 +45,14 @@ def rysuj(func):
     #print(dane)
     for x in dane:
         
-        pltem1.append(float(x[2]))
-        pltem2.append(float(x[3]))
-        plhum.append(float(x[4]))
-        plwg.append(float(x[5]))
-        try:
-            date.append(datetime(x[0][2],x[0][1],x[0][0],x[1][0],x[1][1],0))
-        except TypeError:
-            date.append(x[0]+x[1])
-    #print(date)
+        pltem1.append(float(x[1]))
+        pltem2.append(float(x[2]))
+        plhum.append(float(x[3]))
+        plwg.append(float(x[4]))
+        date.append(datetime.strptime(x[0],'%Y-%m-%d %H:%M:%S'))
+        
+            #date.append(datetime(x[0][2],x[0][1],x[0][0],x[1][0],x[1][1],0))
+    print(date)
     #print(plhum)
     #print(plwg)
     ax.patch.set_facecolor('#151515')
@@ -183,7 +182,7 @@ try:
     fig.patch.set_facecolor('#202020')
     #fig.patch.set_alpha(0.3)
     ax = fig.add_subplot(111)
-    rysuj(get_all(100))
+    rysuj(get_all_hour())
 except Exception as ex:
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title=err, message=err[50:], timeout=20)

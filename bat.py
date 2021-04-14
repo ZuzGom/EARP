@@ -63,8 +63,7 @@ def get_inf():
     connection = polaczenie()
 
     if(connection!=None):
-#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements ORDER BY Datetime DESC LIMIT 1"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements ORDER BY Datetime DESC LIMIT 1"
         query = execute_read_query(connection, select_query)
 
         connection.close()
@@ -81,9 +80,6 @@ def get_inf():
         humi = str(query[3])
         kalendarz = str(query[4])
         zegar = str(query[5])
-        
-        #Teraz elementy 6-8 trzeba jako date jakos
-        #Elementy 9-11 jako godzine jakos
 
         data = kalendarz + "\n" + zegar
         temp= "zew: "+ temp1 + '°C\nwew: ' + temp2 + '°C'
@@ -98,6 +94,36 @@ def get_inf():
 
         return data, temp, waga + 'kg', humi + "%"
 
+#Function return 'tab[]' to TODAY graph
+def get_all_day():
+    teraz = datetime.now()
+    dzien = str(teraz.day)
+    miesiac = str(teraz.month)
+    rok = str(teraz.year)
+
+    tab = []
+    connection = polaczenie()
+
+    if(connection!=None):
+        #[0] - Tablicy to jest najnowszy jak coś
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        query = execute_read_query(connection, select_query)
+        connection.close()
+        
+        datet=str(query[-1][-2]) + " "
+        
+        #Co to za zapis w Pythonie? += Chyba musi być 'datet = datet + str(query[-1][-1])' ale ja sie nie znam
+        # to zwykły operator jak w c++, -=, +=, *= itd,  rowne to jest temu co napisałeś
+        datet+=str(query[-1][-1])
+
+        for x in query:
+            line = [datet]
+            line += list(x[:4])
+            line[-1]=int(float(line[-1]))/1000
+            tab.append(line)
+
+    return tab
+#print(get_all_day())
 #Function return 'tab[]' to hour back graph
 def get_all_hour():
     teraz = datetime.now()
@@ -111,53 +137,23 @@ def get_all_hour():
     connection = polaczenie()
 
     if(connection!=None):
-#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
         #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE ((Hour=" + str(int(godzina)-1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
-        '''
-        #To trzeba zmienić bo inna kolejność
-        for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
-            tab.append(line)
-        '''
-
-    return tab
-
-#Function return 'tab[]' to TODAY graph
-def get_all_day():
-    teraz = datetime.now()
-    dzien = str(teraz.day)
-    miesiac = str(teraz.month)
-    rok = str(teraz.year)
-
-    tab = []
-    connection = polaczenie()
-
-    if(connection!=None):
-#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
-        #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
-        query = execute_read_query(connection, select_query)
-        connection.close()
-        
-        datet=str(query[-1][-2]) + " "
-        
-        #Co to za zapis w Pythonie? += Chyba musi być 'datet = datet + str(query[-1][-1])' ale ja sie nie znam
+        datet=str(query[-1][-2]) + " "       
         datet+=str(query[-1][-1])
 
-        #To trzeba zmienic
         for x in query:
-            line = list(x[:4])
-            print(line)
+            line = [datet]
+            line += list(x[:4])
             line[-1]=int(float(line[-1]))/1000
             tab.append(line)
 
     return tab
+
 
 #Function return 'tab[]' to month back graph
 def get_all_month():
@@ -170,20 +166,21 @@ def get_all_month():
     connection = polaczenie()
 
     if(connection!=None):
-#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
         #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE (Day <= " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + " ) OR ( Day >= " + dzien + " AND Month = " + str(int(miesiac)-1) + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
-        '''
-        #To trzeba zmienić bo inna kolejność
+        datet=str(query[-1][-2]) + " "       
+        datet+=str(query[-1][-1])
+
         for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
+            line = [datet]
+            line += list(x[:4])
+            line[-1]=int(float(line[-1]))/1000
             tab.append(line)
-        '''
+        
             
     return tab
 
@@ -196,20 +193,20 @@ def get_all_year():
     connection = polaczenie()
 
     if(connection!=None):
-#Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
         #[0] - Tablicy to jest najnowszy jak coś
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE Year = " + rok + " ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time FROM Measurements WHERE Year = " + rok + " ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
-        '''
-        #To trzeba zmienić bo inna kolejność
+        datet=str(query[-1][-2]) + " "       
+        datet+=str(query[-1][-1])
+
         for x in query:
-            line = [(x[:3]), (x[3:5])] + list(x[5:])
-            line[-1] = int(float(line[-1])) / 1000
+            line = [datet]
+            line += list(x[:4])
+            line[-1]=int(float(line[-1]))/1000
             tab.append(line)
-        '''
 
     return tab
 
@@ -251,12 +248,10 @@ def get_ule(id):
     
     ule = [1,2]
     return ule
-
 #return 2D tables with data included from now to some date
 def get_all(dni):
     date = datetime.now()-timedelta(minutes=dni)
             #od tej daty
-
     #data, godzina, temp_wew, temp_zew, wilgotnosc, waga
     tab = [
     ['2020-01-17 18:48:09',' 22','24',' 54',' 0'],

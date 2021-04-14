@@ -243,23 +243,23 @@
             on_select: btn.text = '{}'.format(args[1])
 
             CoButton:
-                text: '1h'
+                text: '1 godzina'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.godzina(self.text)
 
             CoButton:
-                text: '1d'
+                text: '1 dzień'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.dzien(self.text)
             CoButton:
-                text: '1m'
+                text: '1 miesiac'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.miesiac(self.text)
             CoButton:
-                text: '1y'
+                text: '1 rok'
                 size_hint_y: None
                 height: '48dp'
                 on_release: root.rok(self.text)
@@ -285,9 +285,10 @@
             orientation: "vertical"
             Wykres:
                 id: clapl
-        Image:
-            source: "image/psz.png"
-            size_hint: 1, 0.5
+
+        #Image:
+            #source: "image/psz.png"
+            #size_hint: 1, 0.5
             
     Menu:  
 
