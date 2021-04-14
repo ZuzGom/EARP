@@ -83,8 +83,8 @@ def get_inf():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements"
-        query = execute_read_query(connection, select_query)[-1]
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements ORDER BY Datetime DESC LIMIT 1"
+        query = execute_read_query(connection, select_query)
 
         connection.close()
 
@@ -149,11 +149,12 @@ def get_all_day():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Day, Month, Year, Hour, Minute, Temperature, AdditionalTemperature, Humidity, Weight FROM Measurements WHERE Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok
+        select_query = "Temperature, AdditionalTemperature, Weight, Humidity, Date, Time FROM Measurements WHERE (Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
 
+        #To trzeba zmienic
         for x in query:
             line = [(x[:3]),(x[3:5])] + list(x[5:])
             line[-1]=int(float(line[-1]))/1000
