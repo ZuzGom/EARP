@@ -117,8 +117,8 @@ def get_all_day():
         connection.close()
         
         #To musisz zmienic bo inna kolejnosc
-        datet=str(query[-1][-2]) + " "
-        datet+=str(query[-1][-1])
+        #datet=str(query[-1][-2]) + " "
+        #datet+=str(query[-1][-1])
 
         for x in query:
             line = [datet]
