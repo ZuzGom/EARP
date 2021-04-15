@@ -218,7 +218,7 @@ def get_all(rok, miesiac, dzien):
             line += list(x[:4])
             tab.append(line)
     
-    return query
+    return tab
 
 #Function pushing alert
 def push_alert(id, error, tresc):

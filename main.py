@@ -119,6 +119,28 @@ class Alert(Screen):
         self.ids.eror.add_widget(but)
         self.ids.eror.add_widget(Err(text=" "))
         
+class Raport(Popup):
+    def raport(self):
+        self.ids.log.text = "To może trochę zająć"
+        try:
+            rok = int(self.ids.Y.text)
+            mies = int(self.ids.M.text)
+            dzien = int(self.ids.D.text)
+            dane = get_all(rok,mies,dzien)
+        except Exception as err:
+            notification.notify(title="Nieprawidłowy format daty", message=err[50:], timeout=20)
+            return 1
+        
+        path = '/storage/emulated/0/Download/'
+        try:
+            f = open(path+'Raport'+str(datetime.now())+'.txt','w')
+        except:
+            f = open('Raport'+str(datetime.now())+'.txt','w')
+        self.ids.log.text = "Zapisujemy!"
+        for x in dane:
+            f.write(str(x)+'\n')
+        f.close()
+        self.ids.log.text = "Wszystko gra!"
 
 class Notif(Screen):
     

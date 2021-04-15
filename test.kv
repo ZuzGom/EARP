@@ -255,12 +255,10 @@
                 id: D
                 text: "20"
         Err:
-            text: "    Wybierz lokalizację do zapisu pliku"
+            id: log
+            text: "    Raport znajdziesz w folderze Downloads (Pobrane)"
             size_hint:1,0.5
-        FileChooserIconView:
-            rootpath:'/storage/emulated/0/' if platform == 'android' else '/home/'
-            id: lokalizacja
-            #text:"    "
+        
         BoxLayout:
             orientation: 'horizontal'
             Button:
@@ -268,7 +266,7 @@
             
                 size_hint:1,0.5
                 on_release: root.dismiss()
-                #on_press: reg()
+                on_press: root.raport()
             Button:
                 text: 'Anuluj'
                 size_hint:1,0.5
