@@ -153,8 +153,6 @@ def get_all_hour():
 
     return tab
 
-print(get_all_hour())
-
 #Function return 'tab[]' to month back graph
 def get_all_month():
     teraz = datetime.now()
