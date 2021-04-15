@@ -204,19 +204,23 @@ def get_all_year():
 
     return tab
 
-'''
 #return tables with data included from now to some date
 def get_all(rok, miesiac, dzien):
     tab = []
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE (Year = " + str(rok) + " AND Month = " + str(miesiac) + " AND Day >= " + str(dzien) + ") OR (Year = " + str(rok) + " AND Month > " + str(miesiac) + ""
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ( Year = " + str(rok) + " AND Month = " + str(miesiac) + " AND Day >= " + str(dzien) + ") OR ( Year = " + str(rok) + " AND Month > " + str(miesiac) + ") OR ( Year > " + str(rok) + " )"
         query = execute_read_query(connection, select_query)
     
+        for x in query:
+            line = [x[-6:]]
+            line += list(x[:4])
+            tab.append(line)
     
-    return tab
-'''
+    return query
+
+get_all(2020, 10, 15)
 
 #Function pushing alert
 def push_alert(id, error, tresc):
