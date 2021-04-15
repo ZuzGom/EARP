@@ -19,6 +19,17 @@ def tcp():
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
 
+def track():
+    try:
+        page = requests.get('https://github.com/ZuzGom/remote/blob/main/url.txt')
+    except requests.exceptions.ConnectionError:
+        linia = "None"
+    else:       
+        soup = BeautifulSoup(page.content, 'html.parser')
+        linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
+    return linia
+
+
 u_tcp = tcp().split(':')
 host=u_tcp[1][2:]
 port=u_tcp[2]
@@ -140,7 +151,7 @@ def get_all_hour():
 #Zwraca Temperature wewnatrz, temperature na zewnatrz, waga, wilgonotsc, 2021-miesiac-dzien, godzina:minuta:sekunda, rok, miesiac, dzien, godzina, minuta, sekunda
 		#[0] - Tablicy to jest najnowszy jak coś
 #Dolozylem - Year, Month, Day, Hour, Minute, Second
-        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ((Hour=" + str(int(godzina)) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Weight, Humidity, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ((Hour=" + str(int(godzina)+1) + " AND Minute<=" + minuta + " ) AND Day=" + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") OR (( Hour = " + str(int(godzina)-2) + " AND Minute >= " + minuta + " ) AND Day = " + dzien + " AND Month = " + miesiac + " AND Year = " + rok + ") ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
 
         connection.close()
