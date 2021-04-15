@@ -220,8 +220,6 @@ def get_all(rok, miesiac, dzien):
     
     return query
 
-get_all(2020, 10, 15)
-
 #Function pushing alert
 def push_alert(id, error, tresc):
     connection = polaczenie()
