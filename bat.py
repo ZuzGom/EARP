@@ -29,7 +29,6 @@ def track():
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
 
-
 u_tcp = tcp().split(':')
 host=u_tcp[1][2:]
 port=u_tcp[2]
@@ -156,7 +155,6 @@ def get_all_hour():
 
     return tab
 
-
 #Function return 'tab[]' to month back graph
 def get_all_month():
     teraz = datetime.now()
@@ -210,7 +208,7 @@ def get_all(rok, miesiac, dzien):
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ( Year = " + str(rok) + " AND Month = " + str(miesiac) + " AND Day >= " + str(dzien) + ") OR ( Year = " + str(rok) + " AND Month > " + str(miesiac) + ") OR ( Year > " + str(rok) + " )"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Water, Sound, AccelerationX, AccelerationY, AccelerationZ, RotationX, RotationY, RotationZ, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ( Year = " + str(rok) + " AND Month = " + str(miesiac) + " AND Day >= " + str(dzien) + ") OR ( Year = " + str(rok) + " AND Month > " + str(miesiac) + ") OR ( Year > " + str(rok) + " )"
         query = execute_read_query(connection, select_query)
     
         for x in query:
@@ -230,7 +228,6 @@ def push_alert(id, error, tresc):
     
     connection.close()
     
-
 #Function return 'tab[]' with last 5 records from table - Alerty
 def get_err():
     connection = polaczenie()
