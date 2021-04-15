@@ -18,6 +18,7 @@ import webbrowser
 
 try:
     from bat import *
+    from xlsxwriter import Workbook
 
 except Exception as ex:
     print(ex)
@@ -127,20 +128,32 @@ class Raport(Popup):
             mies = int(self.ids.M.text)
             dzien = int(self.ids.D.text)
             dane = get_all(rok,mies,dzien)
+            dane.insert(0,"Date, Temperature, AdditionalTemperature, Humidity, Weight, Water, Sound, AccelerationX, AccelerationY, AccelerationZ, RotationX, RotationY, RotationZ".split(","))
         except Exception as err:
             notification.notify(title="Nieprawidłowy format daty", message=err[50:], timeout=20)
             return 1
         
         path = '/storage/emulated/0/Download/'
         try:
-            f = open(path+'Raport'+str(datetime.now())+'.txt','w')
+            with Workbook('/storage/emulated/0/Download/Raport_'+str(datetime.now())+'.xlsx') as book:
+                sheet = book.add_worksheet()
+                for row, data in enumerate(dane):
+                    try:
+                        data[0]=str(datetime(*data[0][0:6]))
+                    except TypeError:
+                        data[0]=str(data[0])                    
+                    sheet.write_row(row, 0, data)
+
         except:
-            f = open('Raport'+str(datetime.now())+'.txt','w')
-        self.ids.log.text = "Zapisujemy!"
-        for x in dane:
-            f.write(str(x)+'\n')
-        f.close()
-        self.ids.log.text = "Wszystko gra!"
+            with Workbook('Raport_'+str(datetime.now())+'.xlsx') as book:
+                sheet = book.add_worksheet()
+                for row, data in enumerate(dane):                                      
+                    try:
+                        data[0]=str(datetime(*data[0][0:6]))
+                    except TypeError:
+                        data[0]=str(data[0])                    
+                    sheet.write_row(row, 0, data)
+        self.ids.log.text = "Zapisane!"
 
 class Notif(Screen):
     
