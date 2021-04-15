@@ -29,8 +29,6 @@ def track():
         linia = str(soup.find("td", {"id": "LC1"})).split()[-1][9:-5]                        
     return linia
 
-
-
 #Function which connect with database
 def polaczenie():
     u_tcp = tcp().split(':')
@@ -143,9 +141,8 @@ def get_all_hour():
     connection = polaczenie()
 
     if(connection!=None):
-        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ( Hour = " + godzina + " AND Minute <= " + minuta + " ) OR ( HOUR = " + godz + " AND Minute >= " + minuta + " ) ORDER BY Datetime DESC"
+        select_query = "SELECT Temperature, AdditionalTemperature, Humidity, Weight, Date, Time, Year, Month, Day, Hour, Minute, Second FROM Measurements WHERE ( Year = " + rok + " AND Month = " + miesiac + " AND Day = " + dzien + " AND  Hour = " + godzina + " AND Minute <= " + minuta + " ) OR ( Year = " + rok + " AND Month = " + miesiac + " AND Day = " + dzien + " AND HOUR = " + godzina + " AND Minute >= " + minuta + " ) ORDER BY Datetime DESC"
         query = execute_read_query(connection, select_query)
-        print(select_query)
         connection.close()
 
         for x in query:
@@ -155,7 +152,9 @@ def get_all_hour():
             tab.append(line)
 
     return tab
+
 print(get_all_hour())
+
 #Function return 'tab[]' to month back graph
 def get_all_month():
     teraz = datetime.now()
