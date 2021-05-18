@@ -28,7 +28,7 @@ except Exception as ex:
     notification.notify(title=err, message=err[50:], timeout=20)
     push_alert(0,0,err)
     
-lista_uli=[0,1]
+lista_uli=[0,1,2,3,4]
 
 def temp():
     return []
@@ -90,15 +90,15 @@ class Ul(GridLayout):
     data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
     
     
-    def __init__(self,adata,awei,atemp,ahumi):
+    def __init__(self,ul_id):
         super(Ul,self).__init__()
-        self.data=adata
-        self.waga=awei
-        self.temp=atemp
-        self.humi=ahumi
+        self.ul_id=ul_id
     
     def update(self):
-        inf =get_inf()
+        #inf =get_inf()
+        dat= str(datetime.now())
+        dat = dat[:10]+'\n'+dat[11:]
+        inf = dat,"0","0","0"
         self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = inf
         self.data, self.waga, self.temp, self.humi=inf
 
@@ -111,19 +111,18 @@ class Ule(Screen):
     
 
     data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
-    il = len(lista_uli)
+    il = len(lista_uli) + 1
     def go(self):
-        self.ids.cialo.clear_widgets() 
-        for x in lista_uli:
-            temp = Ul(str(datetime.now()),"0","0","0")
-            #self.ul_obiekt.append(temp)                  
-            self.ids.cialo.add_widget(temp)
+        for i in range(self.il-1):
+            self.ul_obiekt[i].update()
+
     def __init__(self,**kwargs):
         super(Ule,self).__init__(**kwargs)
         for x in lista_uli:
-            temp = Ul(str(datetime.now()),"0","0","0")
+            temp = Ul(x)
             self.ul_obiekt.append(temp)                  
             self.ids.cialo.add_widget(temp)
+        self.ids.cialo.add_widget(Label(size_hint=(1,0.5) ))
     def up(self):
         global ul_id
         inf=get_inf()

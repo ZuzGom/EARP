@@ -32,6 +32,7 @@
     hum: hum.__self__
     wei: wei.__self__
     cols: 4
+    spacing: 5
     #size_hint: 2,1
     size_hint: 1,0.5 
     #orientation: "horizontal"
@@ -129,13 +130,15 @@
 <Ule>
     
     cialo: cialo.__self__
+
+    
     ScrollView:
-        size: 500, root.height
+        size: 500, root.height*root.il
         pos: root.width - self.width, root.height - 1.1*self.height
         BoxLayout:                   
             orientation: "vertical"
-            pos: root.width -self.width + 10, root.height - self.height - 50
-            size: root.width-20, root.height - 100
+            pos: root.width -self.width + 10, root.height - self.height 
+            size: root.width-20, root.height*(root.il/2)
             size_hint: None, None
             spacing: 5
             
