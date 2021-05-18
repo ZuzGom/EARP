@@ -26,7 +26,11 @@
         Rectangle:
             pos: self.pos
             size: self.size
-<BazaGrid@GridLayout>
+<Ul@GridLayout>
+    dat: dat.__self__
+    tem: tem.__self__
+    hum: hum.__self__
+    wei: wei.__self__
     cols: 4
     #size_hint: 2,1
     size_hint: 1,0.5 
@@ -45,7 +49,19 @@
     Chud:
         text: "Temperatura"
     Chud:
-        text: "Wilgotność" 
+        text: "Wilgotność"
+    Chud:
+        id: dat
+        text: root.data
+    Chud:
+        id: wei
+        text: root.waga 
+    Chud:
+        id: tem
+        text: root.temp 
+    Chud:
+        id:hum
+        text: root.humi  
 
 
 <Menu>
@@ -111,14 +127,11 @@
 
 
 <Ule>
-    dat: dat.__self__
-    tem: tem.__self__
-    hum: hum.__self__
-    wei: wei.__self__
+    
     cialo: cialo.__self__
     ScrollView:
         size: 500, root.height
-        pos: root.width - self.width, root.height - self.height - 200
+        pos: root.width - self.width, root.height - 1.1*self.height
         BoxLayout:                   
             orientation: "vertical"
             pos: root.width -self.width + 10, root.height - self.height - 50
@@ -126,26 +139,14 @@
             size_hint: None, None
             spacing: 5
             
-            BazaGrid:
-                Chud:
-                    id: dat
-                    text: root.data
-                Chud:
-                    id: wei
-                    text: root.waga 
-                Chud:
-                    id: tem
-                    text: root.temp 
-                Chud:
-                    id:hum
-                    text: root.humi 
+            
             ButImage:                
                 # take 50% size of the FloatLayout
-                size_hint: 1,.5 
+                size_hint: 1, 1/(root.il*2) 
                 # Make Button change it's opacity when pressed for visual indication
                 opacity: 1 if self.state == 'normal' else .2
                 source: 'image/refr.png'
-                on_press: root.up()
+                on_press: root.go()
                 #size_hint: 1,0.25 
             BoxLayout:
                 id: cialo                   

@@ -8,6 +8,7 @@
 /mysql
 /mysqlx
 *.spec
+*.xlsx
 /__pycache__
 /notify_run
 /ol

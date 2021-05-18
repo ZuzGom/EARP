@@ -4,6 +4,7 @@ from kivy.core.window import Window
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
@@ -27,8 +28,10 @@ except Exception as ex:
     notification.notify(title=err, message=err[50:], timeout=20)
     push_alert(0,0,err)
     
+lista_uli=[0,1]
 
-
+def temp():
+    return []
 def manag(scr):
     scr.add_widget(Ule(name="ule"))
     scr.add_widget(Alert(name="alert"))
@@ -83,13 +86,49 @@ class Menu(FloatLayout):
         sm.current = name
         
 
+class Ul(GridLayout):
+    data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
+    
+    
+    def __init__(self,adata,awei,atemp,ahumi):
+        super(Ul,self).__init__()
+        self.data=adata
+        self.waga=awei
+        self.temp=atemp
+        self.humi=ahumi
+    
+    def update(self):
+        inf =get_inf()
+        self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = inf
+        self.data, self.waga, self.temp, self.humi=inf
+
+        
+
+
 class Ule(Screen):
-    data, temp, waga, humi = get_inf()
-    #data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
+    ul_obiekt=[]
+    #data, temp, waga, humi = get_inf()
+    
+
+    data, temp, waga, humi = "00-00-0000 \n 00:00:00","0","0","0"
+    il = len(lista_uli)
+    def go(self):
+        self.ids.cialo.clear_widgets() 
+        for x in lista_uli:
+            temp = Ul(str(datetime.now()),"0","0","0")
+            #self.ul_obiekt.append(temp)                  
+            self.ids.cialo.add_widget(temp)
+    def __init__(self,**kwargs):
+        super(Ule,self).__init__(**kwargs)
+        for x in lista_uli:
+            temp = Ul(str(datetime.now()),"0","0","0")
+            self.ul_obiekt.append(temp)                  
+            self.ids.cialo.add_widget(temp)
     def up(self):
         global ul_id
         inf=get_inf()
         self.ids.dat.text, self.ids.tem.text, self.ids.wei.text, self.ids.hum.text, = inf
+        #self.ids.dat.text=str(datetime.datetime.now())
         if inf[0]=="00-00-0000 \n 00:00:00":
             self.ids.cialo.clear_widgets()
             self.ids.cialo.add_widget(image(source="image/Batis_Pszczola.png"))
@@ -216,7 +255,7 @@ try:
     fig.patch.set_facecolor('#202020')
     #fig.patch.set_alpha(0.3)
     ax = fig.add_subplot(111)
-    rysuj(get_all_hour())
+    rysuj(temp())
 except Exception as ex:
     err = '{}: {})'.format(ex.__class__.__name__, ex)
     notification.notify(title=err, message=err[50:], timeout=20)
@@ -231,7 +270,7 @@ class TestApp(App):
     Window.clearcolor = (40 / 255, 40 / 255, 40 / 255, 1)
 
     def build(self):
-        manag(sm)
+        manag(sm)       
         return sm
 
 #if __name__ == '__main__':
